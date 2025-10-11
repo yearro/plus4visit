@@ -1,12 +1,76 @@
+import { useThemeColor } from '@/hooks/use-theme-color'
+import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, View, Image } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const LoginScreen = () => {
+  const insets = useSafeAreaInsets()
+  const primary = useThemeColor({}, 'primary')
+  // const secondary = useThemeColor({}, 'secondary')
+  const Tertiary = useThemeColor({}, 'tertiary')
   return (
-    <View>
-      <Text>LoginScreen</Text>
-    </View>
+    <KeyboardAvoidingView
+      behavior='padding'
+      style={{
+        flex: 1,
+        paddingTop: insets.top
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.sectionLeft}>
+          <Image
+            source={require('@/assets/images/thegift.png')}
+            style={{width: 500, height: 300}}
+          />
+        </View>
+        <View style={[styles.sectionRight, { backgroundColor: primary }]}>
+          <View>
+            <Ionicons
+              style={styles.icon}
+              name='person-circle-outline'
+            />
+            <Text style={styles.projectTitle}>Plus4Visit</Text>
+          </View>
+        </View>
+       
+      </View>
+    </KeyboardAvoidingView>
   )
 }
 
 export default LoginScreen
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  icon: {
+    color: 'white',
+    fontSize: 150,
+  },
+  header: {
+    height: 180,
+    backgroundColor: 'tomato'
+  },
+  projectTitle: {
+    fontFamily: 'MontserratBold',
+    color: 'white',
+    fontSize: 50
+  },
+  sectionRight: {
+    width: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  sectionLeft: {
+    width: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})

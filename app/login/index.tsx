@@ -1,3 +1,4 @@
+import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
@@ -7,8 +8,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 const LoginScreen = () => {
   const insets = useSafeAreaInsets()
   const primary = useThemeColor({}, 'primary')
-  // const secondary = useThemeColor({}, 'secondary')
-  const Tertiary = useThemeColor({}, 'tertiary')
   return (
     <KeyboardAvoidingView
       behavior='padding'
@@ -25,12 +24,22 @@ const LoginScreen = () => {
           />
         </View>
         <View style={[styles.sectionRight, { backgroundColor: primary }]}>
-          <View>
+          <View style={styles.inputContainer}>
             <Ionicons
               style={styles.icon}
               name='person-circle-outline'
             />
             <Text style={styles.projectTitle}>Plus4Visit</Text>
+            <ThemedTextInput
+              icon='mail-outline'
+              typeInput='Secondary'
+              placeholder='Example: myEmail@email.com'
+            />
+            <ThemedTextInput
+              icon='lock-closed-outline'
+              typeInput='Secondary'
+              placeholder='Write your password'
+            />
           </View>
         </View>
        
@@ -50,11 +59,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: 'white',
-    fontSize: 150,
-  },
-  header: {
-    height: 180,
-    backgroundColor: 'tomato'
+    fontSize: 80,
   },
   projectTitle: {
     fontFamily: 'MontserratBold',
@@ -72,5 +77,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 50,
+    width: 400
   }
 })

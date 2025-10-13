@@ -72,23 +72,24 @@ const styles = StyleSheet.create({
     fontSize: 50
   },
   sectionRight: {
-    width: '50%',
+    width: '60%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   sectionLeft: {
-    width: '50%',
+    width: '40%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: 50,
   },
   inputContainer: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 50,
+   
     width: 400
   }
 })

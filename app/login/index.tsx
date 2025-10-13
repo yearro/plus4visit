@@ -1,3 +1,4 @@
+import ThemedButton from '@/components/ThemedButton'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import { Ionicons } from '@expo/vector-icons'
@@ -40,6 +41,10 @@ const LoginScreen = () => {
               typeInput='Secondary'
               placeholder='Write your password'
             />
+            <ThemedButton
+              icon='log-in-outline'
+              typeButton='Secondary'
+            >Login</ThemedButton>
           </View>
         </View>
        
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 80,
   },
   projectTitle: {
-    fontFamily: 'MontserratBold',
+    fontFamily: 'MontserratRegular',
     color: 'white',
     fontSize: 50
   },

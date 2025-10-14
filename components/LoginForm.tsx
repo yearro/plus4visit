@@ -5,8 +5,17 @@ import ThemedTextInput from './ThemedTextInput'
 import ThemedButton from './ThemedButton'
 import { loginValidationSchema } from '@/presentation/auth/SchemaValidationLogin'
 import { Ionicons } from '@expo/vector-icons'
-import Test from './Test'
 
+const ErrorMessage = ({error=''}) => (
+  <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+    <Ionicons
+      name="close-circle-outline"
+      size={20}
+      color={'red'}
+    />
+      <Text style={{ color: 'red' }}> {error} </Text>
+  </View>
+)
 const LoginForm = () => {
   return (
     <Formik
@@ -23,7 +32,7 @@ const LoginForm = () => {
             value={values.email}
             onChangeText={handleChange('email')}
           />
-          { errors.email && touched.email && <Text>{errors.email}</Text> }
+          { errors.email && touched.email &&  <ErrorMessage error={errors.email} /> }
           <ThemedTextInput
             icon='lock-closed-outline'
             typeInput='Secondary'
@@ -31,20 +40,8 @@ const LoginForm = () => {
             value={values.pass}
             onChangeText={handleChange('pass')}
           />
-          { errors.pass && touched.pass && <Text>{errors.pass}</Text> }
-
-
-          <Test error='a ver que pasa' />
-
-
+          { errors.pass && touched.pass && <ErrorMessage error={errors.pass} /> }
           
-          <View style={{ flexDirection: 'row', flex: 1, backgroundColor: 'white' }}>
-            <Ionicons
-              name="close-circle-outline"
-              size={20}
-            />
-              <Text> nada</Text>
-          </View>
           <ThemedButton
             onPress={() => handleSubmit()}
             icon='log-in-outline'

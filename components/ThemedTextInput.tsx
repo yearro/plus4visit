@@ -1,4 +1,4 @@
-import { View, Text, TextInputProps, TextInput, StyleSheet } from 'react-native'
+import { View, TextInputProps, TextInput, StyleSheet } from 'react-native'
 import React, { useRef } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { useThemeColor } from '@/hooks/use-theme-color'
@@ -42,7 +42,6 @@ export default ThemedTextInput
 
 const styles = StyleSheet.create({
   container: {
-   
     padding: 10,
     marginBottom: 10,
     flexDirection: 'row',

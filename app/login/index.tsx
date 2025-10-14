@@ -1,11 +1,9 @@
-import ThemedButton from '@/components/ThemedButton'
-import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, View, Image } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
+import LoginForm from '@/components/LoginForm'
 const LoginScreen = () => {
   const insets = useSafeAreaInsets()
   const primary = useThemeColor({}, 'primary')
@@ -31,20 +29,7 @@ const LoginScreen = () => {
               name='person-circle-outline'
             />
             <Text style={styles.projectTitle}>Plus4Visit</Text>
-            <ThemedTextInput
-              icon='mail-outline'
-              typeInput='Secondary'
-              placeholder='Example: myEmail@email.com'
-            />
-            <ThemedTextInput
-              icon='lock-closed-outline'
-              typeInput='Secondary'
-              placeholder='Write your password'
-            />
-            <ThemedButton
-              icon='log-in-outline'
-              typeButton='Secondary'
-            >Login</ThemedButton>
+            <LoginForm />
           </View>
         </View>
        
@@ -89,7 +74,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-   
     width: 400
   }
 })

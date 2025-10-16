@@ -18,8 +18,8 @@ export const Colors = {
     tabIconSelected: tintColorLight,
     primary: '#0A2E50',
     secondary: '#FF6B6B',
-    tertiary: '#eeeee4'
-
+    tertiary: '#eeeee4',
+    error: '#D94446'
   },
   dark: {
     text: '#ECEDEE',
@@ -30,7 +30,8 @@ export const Colors = {
     tabIconSelected: tintColorDark,
     primary: '#0A2E50',
     secondary: '#FF6B6B',
-    tertiary: '#eeeee4'
+    tertiary: '#eeeee4',
+    error: '#D94446'
   },
 };
 

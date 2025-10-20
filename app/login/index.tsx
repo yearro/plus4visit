@@ -1,9 +1,10 @@
 import { useThemeColor } from '@/hooks/use-theme-color'
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, View, Image } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, View, Image, Button } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import LoginForm from '@/components/LoginForm'
+import { useAuth0 } from 'react-native-auth0';
 const LoginScreen = () => {
   const insets = useSafeAreaInsets()
   const primary = useThemeColor({}, 'primary')
@@ -30,12 +31,39 @@ const LoginScreen = () => {
             />
             <Text style={styles.projectTitle}>Plus4Visit</Text>
             <LoginForm />
+            <LoginButton />
+            <Profile />
           </View>
         </View>
-       
       </View>
     </KeyboardAvoidingView>
   )
+}
+
+const LoginButton = () => {
+    const {authorize} = useAuth0();
+
+    const onPress = async () => {
+        try {
+            await authorize();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    return <Button onPress={onPress} title="Log in" />
+}
+
+const Profile = () => {
+    const {user, error} = useAuth0();
+
+    return (
+        <>
+            {user && <Text>Logged in as {user.name}</Text>}
+            {!user && <Text>Not logged in</Text>}
+            {error && <Text>{error.message}</Text>}
+        </>
+    )
 }
 
 export default LoginScreen

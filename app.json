@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yearro.plus4visit"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +20,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.yearro.plus4visit"
     },
     "web": {
       "output": "static",
@@ -38,11 +40,23 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "react-native-auth0",
+        {
+          "domain": "dev-etfd46ex2axs1usu.us.auth0.com"
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e9005b77-b57a-4ef7-a38e-ee89cacc49d4"
+      }
     }
   }
 }

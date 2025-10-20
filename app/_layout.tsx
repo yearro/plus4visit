@@ -26,20 +26,15 @@ export default function RootLayout() {
   }
 
   return (
-    <Auth0Provider
-      domain={'dev-etfd46ex2axs1usu.us.auth0.com'}
-      clientId={'22F3WCvhapDRV3DR5XDEdY18GlcPPf4N'}
-    >
-      <GestureHandlerRootView>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          ></Stack>
-          <StatusBar style="auto" />
-        </ThemeProvider>
-      </GestureHandlerRootView>
-    </Auth0Provider>
+    <GestureHandlerRootView>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        ></Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

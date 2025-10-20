@@ -24,12 +24,20 @@ const ErrorMessage = ({error=''}) => {
 const LoginForm = () => {
   return (
     <Formik
-      initialValues={{ email: '', pass: '' }}
+      initialValues={{ email: '', pass: '', name: '' }}
       validationSchema={ loginValidationSchema }
       onSubmit={values => console.log(values)}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <>
+          <ThemedTextInput
+            icon='person-outline'
+            typeInput='Secondary'
+            placeholder='Write your name'
+            value={values.name}
+            onChangeText={handleChange('name')}
+          />
+          { errors.name && touched.name &&  <ErrorMessage error={errors.name} /> }
           <ThemedTextInput
             icon='mail-outline'
             typeInput='Secondary'
@@ -51,7 +59,7 @@ const LoginForm = () => {
             onPress={() => handleSubmit()}
             icon='log-in-outline'
             typeButton='Secondary'
-          >Login</ThemedButton>
+          >Create User</ThemedButton>
         </>
       )}
     </Formik>

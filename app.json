@@ -40,12 +40,6 @@
             "backgroundColor": "#000000"
           }
         }
-      ],
-      [
-        "react-native-auth0",
-        {
-          "domain": "dev-etfd46ex2axs1usu.us.auth0.com"
-        }
       ]
     ],
     "experiments": {

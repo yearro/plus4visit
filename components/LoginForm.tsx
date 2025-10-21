@@ -6,6 +6,8 @@ import ThemedButton from './ThemedButton'
 import { loginValidationSchema } from '@/presentation/auth/SchemaValidationLogin'
 import { Ionicons } from '@expo/vector-icons'
 import { useThemeColor } from '@/hooks/use-theme-color'
+import { useAuthStore } from '@/presentation/auth/useAuthStore'
+import { router } from 'expo-router'
 
 const ErrorMessage = ({error=''}) => {
   const errorColor = useThemeColor({}, 'error')
@@ -22,11 +24,20 @@ const ErrorMessage = ({error=''}) => {
 }
 
 const LoginForm = () => {
+  const { login } = useAuthStore()
+
+  const onSubmitParams = async({ email = '', pass = '', name = ''}) => {
+    const state = await login(email, pass, name)
+    if(state) {
+      router.replace('/tabs')
+    }
+  }
+  
   return (
     <Formik
-      initialValues={{ email: '', pass: '', name: '' }}
+      initialValues={{ email: 'nada@nada.com', pass: 'Abc1234', name: 'Yeri Armenta' }}
       validationSchema={ loginValidationSchema }
-      onSubmit={values => console.log(values)}
+      onSubmit={onSubmitParams}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <>

@@ -7,7 +7,6 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Auth0Provider } from 'react-native-auth0'
 
 export const unstable_settings = {
   anchor: '(tabs)',

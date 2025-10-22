@@ -15,7 +15,7 @@ const HomeScreen = () => {
     return <Redirect href='../login'/>
   
   if ( status === 'authenticated')
-    return <Redirect href='../tabs' />
+    return <Redirect href='../(plus-app)/(drawer)' />
 
   return (
     <View>

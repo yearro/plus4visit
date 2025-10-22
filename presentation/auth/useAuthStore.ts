@@ -13,6 +13,6 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   },
   checkStatus: async() => {
     const likeUser = await SecureStoreGetItem('user')
-    console.log('checkStatus ', likeUser)
+    console.log(likeUser)
   }
 }))

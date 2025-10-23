@@ -29,7 +29,7 @@ const LoginForm = () => {
   const onSubmitParams = async({ email = '', pass = '', name = ''}) => {
     const state = await login(email, pass, name)
     if(state) {
-      router.replace('/(plus-app)/(drawer)')
+      router.replace('/(plus-app)/(drawer)/(users)')
     }
   }
   

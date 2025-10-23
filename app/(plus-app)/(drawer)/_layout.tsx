@@ -6,7 +6,6 @@ export default function Layout() {
   const drawerActiveColor = useThemeColor({}, 'secondary')
   return (
     <Drawer
-      initialRouteName='(users)/index'
       screenOptions={{
         headerShadowVisible: true,
         drawerActiveTintColor: drawerActiveColor,
@@ -19,7 +18,7 @@ export default function Layout() {
           drawerLabel: 'Users',
           title: 'User Management',
           drawerIcon: ({ color, size }) => (
-            <Ionicons name='albums-outline' size={size} color={color} />
+            <Ionicons name='person-circle-outline' size={size} color={color} />
           )
         }}
       />
@@ -29,7 +28,7 @@ export default function Layout() {
           drawerLabel: 'Settings',
           title: 'App settings',
           drawerIcon: ({ color, size }) => (
-            <Ionicons name='albums-outline' size={size} color={color} />
+            <Ionicons name='cog-outline' size={size} color={color} />
           )
         }}
       />
@@ -39,7 +38,7 @@ export default function Layout() {
           drawerLabel: 'Survey',
           title: 'New survey',
           drawerIcon: ({ color, size }) => (
-            <Ionicons name='albums-outline' size={size} color={color} />
+            <Ionicons name='thumbs-up-outline' size={size} color={color} />
           )
         }}
       />
@@ -49,7 +48,7 @@ export default function Layout() {
           drawerLabel: 'Report',
           title: 'Reports',
           drawerIcon: ({ color, size }) => (
-            <Ionicons name='albums-outline' size={size} color={color} />
+            <Ionicons name='bar-chart-outline' size={size} color={color} />
           )
         }}
       />

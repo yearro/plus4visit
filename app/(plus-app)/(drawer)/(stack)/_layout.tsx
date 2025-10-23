@@ -9,10 +9,10 @@ const StackLayout = () => {
       }}
     >
       <Stack.Screen
-        name='(survery)/index'
+        name='(survey)/index'
       />
       <Stack.Screen
-        name='(survery)/[id]'
+        name='(survey)/[id]'
       />
     </Stack>
   )

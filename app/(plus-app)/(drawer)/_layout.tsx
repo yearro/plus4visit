@@ -1,16 +1,20 @@
+import { useThemeColor } from '@/hooks/use-theme-color';
 import { Ionicons } from '@expo/vector-icons';
 import { Drawer } from 'expo-router/drawer';
 
 export default function Layout() {
+  const drawerActiveColor = useThemeColor({}, 'secondary')
   return (
     <Drawer
       initialRouteName='(users)/index'
       screenOptions={{
-        headerShadowVisible: true
+        headerShadowVisible: true,
+        drawerActiveTintColor: drawerActiveColor,
+        drawerHideStatusBarOnOpen: true,
       }}
     >
       <Drawer.Screen
-        name="(users)/index" // This is the name of the page and must match the url from root
+        name="(users)/index"
         options={{
           drawerLabel: 'Users',
           title: 'User Management',
@@ -20,7 +24,7 @@ export default function Layout() {
         }}
       />
       <Drawer.Screen
-        name="(settings)/index" // This is the name of the page and must match the url from root
+        name="(settings)/index"
         options={{
           drawerLabel: 'Settings',
           title: 'App settings',
@@ -30,7 +34,7 @@ export default function Layout() {
         }}
       />
       <Drawer.Screen
-        name="(stack)" // This is the name of the page and must match the url from root
+        name="(stack)"
         options={{
           drawerLabel: 'Survey',
           title: 'New survey',
@@ -40,7 +44,7 @@ export default function Layout() {
         }}
       />
       <Drawer.Screen
-        name="(reports)/index" // This is the name of the page and must match the url from root
+        name="(reports)/index"
         options={{
           drawerLabel: 'Report',
           title: 'Reports',

@@ -1,20 +1,20 @@
 import React from 'react'
-import Drawer from 'expo-router/drawer'
+import { Stack } from 'expo-router'
 
 const StackLayout = () => {
   return (
-    <Drawer
+    <Stack
       screenOptions={{
         headerShown: false
       }}
     >
-      <Drawer.Screen
+      <Stack.Screen
         name='(survery)/index'
       />
-      <Drawer.Screen
+      <Stack.Screen
         name='(survery)/[id]'
       />
-    </Drawer>
+    </Stack>
   )
 }
 

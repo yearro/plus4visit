@@ -40,8 +40,8 @@ export default function Layout() {
       <Drawer.Screen
         name="(users)/index"
         options={{
-          drawerLabel: 'Users',
-          title: 'User Management',
+          drawerLabel: 'Clients',
+          title: 'Client Management',
           drawerIcon: ({ color, size }) => (
             <Ionicons name='person-circle-outline' size={size} color={color} />
           )

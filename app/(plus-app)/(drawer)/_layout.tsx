@@ -1,6 +1,6 @@
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { Ionicons } from '@expo/vector-icons';
-import { DrawerItemList } from '@react-navigation/drawer';
+import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
@@ -19,12 +19,20 @@ export default function Layout() {
         (props) => (
           <View style={{ flex: 1 }}>
             <View style={styles.drawerHeader}>
-              
-              <Image source={require('@/assets/images/plus4visitlogo.png')} style={styles.logo} />
+              <Image
+                source={require('@/assets/images/plus4visitlogo.png')}
+                style={styles.logo}
+              />
               <Text style={[styles.text, { color: textColor }]}>Plus4Visit</Text>
             </View>
             <DrawerItemList {...props} />
-            <Text>Acá es otra cosa</Text>
+            <DrawerItem
+              label={'Sing out'}
+              onPress={() => console.log('Cerrar sesión')}
+              icon={({ color, size}) => (
+                <Ionicons name='log-out-outline' size={size} color={color} />
+              )}
+            />
           </View>
         )
       }
@@ -91,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   text: {
-    fontFamily: 'MontserratRegular',
-    fontSize: 50
+    fontFamily: 'MontserratBold',
+    fontSize: 30
   }
 })

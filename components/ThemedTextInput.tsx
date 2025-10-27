@@ -12,6 +12,7 @@ interface iProps extends TextInputProps {
 
 const ThemedTextInput = ({ icon, typeInput = 'Primary', ...rest }: iProps) => {
   const mainColor = ( typeInput === 'Primary' ) ? useThemeColor({}, 'primary') : useThemeColor({}, 'secondary')
+  const textColor = ( typeInput === 'Primary' ) ? 'black' : 'white'
   const colorPlaceHolder = '#FFFFFF80'
   const inputRef = useRef<TextInput>(null)
   return (
@@ -32,7 +33,9 @@ const ThemedTextInput = ({ icon, typeInput = 'Primary', ...rest }: iProps) => {
         ref={inputRef}
         {...rest}
         placeholderTextColor={colorPlaceHolder}
-        style={[ styles.input, { borderColor: mainColor, color: mainColor }]}
+        style={[ styles.input, { borderColor: mainColor, color: textColor,
+          fontSize: 16
+         }]}
       />
     </View>
   )

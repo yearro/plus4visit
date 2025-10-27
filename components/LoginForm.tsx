@@ -18,7 +18,7 @@ const ErrorMessage = ({error=''}) => {
       size={20}
       color={errorColor}
     />
-      <Text style={{ color: errorColor }}> {error} </Text>
+      <Text style={{ color: 'white', fontFamily: 'MontserratBold', marginLeft: 5 }}> {error} </Text>
   </View>
   )
 }

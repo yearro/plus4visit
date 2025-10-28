@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomWidth: 2,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    fontFamily: 'MontserratRegular'
   }
 })

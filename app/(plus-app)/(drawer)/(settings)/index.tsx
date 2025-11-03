@@ -1,13 +1,14 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useState } from 'react'
-import ThemedView from '@/components/ThemedView'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
+import AwardItem from '@/components/AwardItem'
+import ThemedView from '@/components/ThemedView'
 
 const SettingsScreen = () => {
   const colorBorder = useThemeColor({}, 'secondary')
   const [visits, setVisits] = useState('')
-  const [numberPrices, setNumberPrices] = useState(4)
+  //const [numberPrices, setNumberPrices] = useState(4)
 
   const handleNumericChange = (text:string) => {
     const numericValue = text.replace(/[^0-9]/g, '');
@@ -15,29 +16,40 @@ const SettingsScreen = () => {
   };
 
   return (
-    <ThemedView>
-      <View style={{ flexDirection: 'row',  alignItems:'center' }}>
-        <Text style={ styles.title }>Number of visits</Text>
-        <View style={{ width: 200 }}>
-          <ThemedTextInput
-            keyboardType='numeric'
-            icon='ribbon-outline'
-            placeholder=''
-            value={visits.toString()}
-            onChangeText={handleNumericChange}
-          />
-        </View>
-      </View>
-      <Text
-        style={styles.description}
-      >After this number of visits the client will have the opportunity to participate in a game.</Text>
-      <View  style={[styles.section, { borderColor: colorBorder }]} />
-      <View>
-        <Text style={ styles.title }>Awards : </Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+    >
+      <ThemedView>
+        <ScrollView>
+          <View style={{ flexDirection: 'row',  alignItems:'center' }}>
+            <Text style={ styles.title }>Number of visits</Text>
+            <View style={{ width: 200 }}>
+              <ThemedTextInput
+                keyboardType='numeric'
+                icon='ribbon-outline'
+                placeholder=''
+                value={visits.toString()}
+                onChangeText={handleNumericChange}
+              />
+            </View>
+          </View>
+          <Text
+            style={styles.description}
+          >After this number of visits the client will have the opportunity to participate in a game.</Text>
+          <View  style={[styles.section, { borderColor: colorBorder }]} />
+          <View>
+            <Text style={ styles.title }>Awards : </Text>
+            <View>
+              <AwardItem ind={0} zIndex={4000} zIndexInverse={1000} />
+              <AwardItem ind={1} zIndex={3000} zIndexInverse={2000} />
+              <AwardItem ind={2} zIndex={2000} zIndexInverse={3000} />
+              <AwardItem ind={3} zIndex={1000} zIndexInverse={4000} />
+            </View>
+          </View>
 
-      </View>
-
-    </ThemedView>
+        </ScrollView>
+      </ThemedView>
+    </KeyboardAvoidingView>
   )
 }
 

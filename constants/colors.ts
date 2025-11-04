@@ -1,17 +1,12 @@
-export const colorCodes  = {
-  black: '#000000',
-  white: '#ffffff',
-  red: '#ff0000',
-  blue: '#0000ff',
-  yellow: '#ffff00',
-  lime: '#00ff00',
-  deeppink: '#ff1493',
-  darkblue: '#00008b',
-  darkorange: '#ff8c00',
-  mediumaquamarine: '#66cdaa',
-  indigo: '#4b0082',
-  goldenrod: '#daa520',
-  teal: '#008080',
-  dimgray: '#696969',
-  silver: '#c0c0c0',
-};
+export const colorCodes  = [
+  '#ff0000',
+  '#0000ff',
+  '#ffff00',
+  '#00ff00',
+  '#00008b',
+  '#00bfff',
+  '#66cdaa',
+  '#008080',
+  '#ff8c00',
+  '#ff1493'
+];

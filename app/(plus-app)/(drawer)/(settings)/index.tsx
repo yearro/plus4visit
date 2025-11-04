@@ -43,10 +43,11 @@ const SettingsScreen = () => {
               style={[styles.description, { marginVertical: 15 }]}
             >You can define a maximum of 10 different prizes.</Text>
             <View>
-              <AwardItem ind={0} zIndex={4000} zIndexInverse={1000} />
-              <AwardItem ind={1} zIndex={3000} zIndexInverse={2000} />
-              <AwardItem ind={2} zIndex={2000} zIndexInverse={3000} />
-              <AwardItem ind={3} zIndex={1000} zIndexInverse={4000} />
+              <AwardItem ind={0} />
+              <AwardItem ind={1} />
+              <AwardItem ind={2} />
+              <AwardItem ind={3} />
+              <AwardItem ind={4} />
             </View>
           </View>
 

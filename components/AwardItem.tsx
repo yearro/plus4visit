@@ -3,6 +3,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 import AwardListItem from './AwardListItem';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 interface iProps {
   color?: string;
@@ -13,6 +14,7 @@ interface iProps {
 }
 
 const AwardItem = ({ color='white', name='Award', ind=0, zIndex, zIndexInverse}:iProps) => {
+  const secondary = useThemeColor({}, 'secondary')
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -23,8 +25,8 @@ const AwardItem = ({ color='white', name='Award', ind=0, zIndex, zIndexInverse}:
 
   return (
     <View style={styles.itemContainer} >
-      <View style={styles.counterContainer}>
-        <Text style={styles.counter}>{ ind + 1 }</Text>
+      <View style={[styles.counterContainer, { borderRightColor: secondary }]}>
+        <Text style={[styles.counter, { color: secondary }]}>{ ind + 1 }</Text>
       </View>
       <View>
         <DropDownPicker
@@ -62,16 +64,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
     marginBottom: 10
-    //justifyContent: 'center'
-    //marginTop: 100,
-    //paddingHorizontal: 20,
   },
   dropdown: {
     borderColor: '#ccc',
   },
   counterContainer: {
     width: 50,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRightWidth: 1,
+    marginRight: 10
   },
   counter: {
     fontSize: 18,

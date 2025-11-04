@@ -1,7 +1,8 @@
-import { View, Text, TouchableOpacity, ViewProps } from 'react-native'
+import { View, Text } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
+import AwardListItem from './AwardListItem';
 
 interface iProps {
   color?: string;
@@ -9,11 +10,6 @@ interface iProps {
   ind: number,
   zIndex: number,
   zIndexInverse: number
-}
-
-type Item = {
-  label?: string
-  value?: string
 }
 
 const AwardItem = ({ color='white', name='Award', ind=0, zIndex, zIndexInverse}:iProps) => {
@@ -24,14 +20,6 @@ const AwardItem = ({ color='white', name='Award', ind=0, zIndex, zIndexInverse}:
     { label: 'Banana 🍌', value: 'banana' },
     { label: 'Orange 🍊', value: 'orange' },
   ]);
-
-  const CustomListItem = ({ item, onPress }:any) => {
-    return (
-    <TouchableOpacity onPress={() => onPress(item)} style={{ padding: 10, borderBottomWidth: 1, borderColor: '#ccc' }}>
-      <Text>{item.label} (Custom)</Text>
-    </TouchableOpacity>
-  );
-  }
 
   return (
     <View style={styles.itemContainer} >
@@ -51,8 +39,11 @@ const AwardItem = ({ color='white', name='Award', ind=0, zIndex, zIndexInverse}:
           zIndex={zIndex}
           zIndexInverse={zIndexInverse}
           style={styles.dropdown}
+          containerStyle={{
+            width: 100
+          }}
           renderListItem={(props) => (
-            <CustomListItem {...props}/>
+            <AwardListItem {...props}/>
           )}
         />
       </View>
@@ -70,6 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 5,
+    marginBottom: 10
     //justifyContent: 'center'
     //marginTop: 100,
     //paddingHorizontal: 20,

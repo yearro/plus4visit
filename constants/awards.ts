@@ -1,0 +1,1 @@
+export const MAX_NUMBER_PRIZES = 10

@@ -27,7 +27,7 @@ const SettingsScreen = () => {
               <ThemedTextInput
                 keyboardType='numeric'
                 icon='ribbon-outline'
-                placeholder=''
+                placeholder='#'
                 value={visits.toString()}
                 onChangeText={handleNumericChange}
               />
@@ -39,6 +39,9 @@ const SettingsScreen = () => {
           <View  style={[styles.section, { borderColor: colorBorder }]} />
           <View>
             <Text style={ styles.title }>Awards : </Text>
+            <Text
+              style={[styles.description, { marginVertical: 15 }]}
+            >You can define a maximum of 10 different prizes.</Text>
             <View>
               <AwardItem ind={0} zIndex={4000} zIndexInverse={1000} />
               <AwardItem ind={1} zIndex={3000} zIndexInverse={2000} />

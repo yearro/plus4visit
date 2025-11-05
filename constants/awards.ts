@@ -1,1 +1,1 @@
-export const MAX_NUMBER_PRIZES = 10
+export const MAX_NUMBER_AWARDS = 10

@@ -1,5 +1,10 @@
 export type AuthStatus = 'authenticated' | 'unauthenticated' | 'checking'
 
+export type Award = {
+  ind: number,
+  name: string
+}
+
 export type User = {
   email: string,
   name: string,

@@ -1,27 +1,52 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import AwardItem from '@/components/AwardItem'
 import ThemedView from '@/components/ThemedView'
+import ThemedButton from '@/components/ThemedButton'
+import { MAX_NUMBER_PRIZES } from '@/constants/awards'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+type newAward = {
+  ind: number,
+  name: string
+}
 
 const SettingsScreen = () => {
+  const insets = useSafeAreaInsets()
   const colorBorder = useThemeColor({}, 'secondary')
   const [visits, setVisits] = useState('')
-  //const [numberPrices, setNumberPrices] = useState(4)
+  const [totalAwards, setTotalAwards] = useState(0)
+  const [awards, setAwards] = useState<newAward[]>([])
 
   const handleNumericChange = (text:string) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     setVisits(numericValue);
   };
 
+  const saveChanges = () => {
+    console.log('Save changes')
+  }
+
+  const addNewAward = () => {
+    if(totalAwards < MAX_NUMBER_PRIZES ) {
+      setTotalAwards(state => state + 1)
+      setAwards([...awards, { ind: totalAwards, name: '' } ])
+    }
+  }
+
+  const removeAward = (ind: number) => {
+    console.log('remove ', ind)
+  }
+
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={{ flex: 1, marginBottom: insets.bottom }}
     >
       <ThemedView>
         <ScrollView>
-          <View style={{ flexDirection: 'row',  alignItems:'center' }}>
+          <View style={styles.headerSection}>
             <Text style={ styles.title }>Number of visits</Text>
             <View style={{ width: 200 }}>
               <ThemedTextInput
@@ -37,18 +62,31 @@ const SettingsScreen = () => {
             style={styles.description}
           >After this number of visits the client will have the opportunity to participate in a game.</Text>
           <View  style={[styles.section, { borderColor: colorBorder }]} />
+          <View style={styles.headerSection}>
+            <Text style={ styles.title }>Awards : { totalAwards }</Text>
+            <ThemedButton
+              onPress={() => addNewAward()}
+              icon='add-circle-outline'
+            >New Award</ThemedButton>
+          </View>
           <View>
-            <Text style={ styles.title }>Awards : </Text>
             <Text
               style={[styles.description, { marginVertical: 15 }]}
-            >You can define a maximum of 10 different prizes.</Text>
+            >You can define a maximum of {MAX_NUMBER_PRIZES} different prizes.</Text>
             <View>
-              <AwardItem ind={0} />
-              <AwardItem ind={1} />
-              <AwardItem ind={2} />
-              <AwardItem ind={3} />
-              <AwardItem ind={4} />
+              {
+                awards.map((award) => (
+                  <AwardItem key={award.ind} ind={award.ind} name={award.name} />
+                ))
+              }
             </View>
+          </View>
+          <View>
+            <ThemedButton
+              onPress={() => saveChanges()}
+              icon='save-outline'
+              typeButton='Secondary'
+            >Save changes</ThemedButton>
           </View>
 
         </ScrollView>
@@ -71,5 +109,10 @@ const styles = StyleSheet.create({
   section: {
     borderTopWidth: 1,
     marginVertical: 20
+  },
+  headerSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 })

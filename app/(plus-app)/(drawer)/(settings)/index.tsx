@@ -11,8 +11,7 @@ import { Award } from '@/presentation/auth/interfaces'
 const SettingsScreen = () => {
   const insets = useSafeAreaInsets()
   const colorBorder = useThemeColor({}, 'secondary')
-  const [visits, setVisits] = useState('')
-  
+  const [visits, setVisits] = useState('0')
   const [awards, setAwards] = useState<Award[]>([])
 
   const handleNumericChange = (text:string) => {
@@ -36,7 +35,6 @@ const SettingsScreen = () => {
               <ThemedTextInput
                 keyboardType='numeric'
                 icon='ribbon-outline'
-                placeholder='#'
                 value={visits.toString()}
                 onChangeText={handleNumericChange}
               />

@@ -43,6 +43,7 @@ const AwardList = ({ awards, setAwards }:iProps) => {
       <View style={styles.headerSection}>
         <Text style={ styles.title }>Awards : { totalAwards }</Text>
         <ThemedButton
+          disabled={awards.length == MAX_NUMBER_AWARDS}
           onPress={() => addNewAward()}
           icon='add-circle-outline'
         >New Award</ThemedButton>

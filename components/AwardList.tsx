@@ -13,20 +13,29 @@ interface iProps {
 const AwardList = ({ awards, setAwards }:iProps) => {
   const [totalAwards, setTotalAwards] = useState(0)
 
+  useEffect(() => {
+    setTotalAwards(awards.length)
+  }, [awards.length])
+
   const addNewAward = () => {
     if(totalAwards < MAX_NUMBER_AWARDS ) {
-      setTotalAwards(state => state + 1)
       setAwards([...awards, { ind: totalAwards, name: '' } ])
     }
   }
 
   const updateValue = (ind:number, value:string) => {
-    const rest = awards.filter((item) => item.ind !== ind)
-    setAwards([...rest, { ind: ind, name: value }].sort((a, b) => a.ind - b.ind))
+    const result = awards.filter((item) => item.ind !== ind)
+    setAwards([...result, { ind: ind, name: value }].sort((a, b) => a.ind - b.ind))
   }
 
   const removeAward = (ind: number) => {
-    console.log('remove ', ind)
+    const result = awards.filter((item) => item.ind !== ind)
+    if (result.length > 0) {
+      for(let i = 0; i < result.length; i++) {
+        result[i] = { ind: i, name: result[i].name }
+      }
+    }
+    setAwards(result)
   }
 
   return (

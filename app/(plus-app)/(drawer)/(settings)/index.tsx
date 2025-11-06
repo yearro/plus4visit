@@ -1,11 +1,9 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
-import AwardItem from '@/components/AwardItem'
 import ThemedView from '@/components/ThemedView'
 import ThemedButton from '@/components/ThemedButton'
-import { MAX_NUMBER_AWARDS } from '@/constants/awards'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AwardList from '@/components/AwardList'
 import { Award } from '@/presentation/auth/interfaces'
@@ -23,11 +21,7 @@ const SettingsScreen = () => {
   };
 
   const saveChanges = () => {
-    console.log('Save changes')
-  }
-
-  const removeAward = (ind: number) => {
-    console.log('remove ', ind)
+    console.log('Save changes', awards)
   }
 
   return (
@@ -54,8 +48,8 @@ const SettingsScreen = () => {
           <View  style={[styles.section, { borderColor: colorBorder }]} />
           <View>
             <AwardList
-              setAwards={setAwards}
               awards={awards}
+              setAwards={setAwards}
             />
           </View>
           <View>

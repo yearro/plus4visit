@@ -1,16 +1,16 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import ThemedButton from './ThemedButton'
 import { Award } from '@/presentation/auth/interfaces'
 import AwardItem from './AwardItem'
 import { MAX_NUMBER_AWARDS } from '@/constants/awards'
 
 interface iProps {
-  setAwards: Dispatch<SetStateAction<Award[]>>,
-  awards: Award[]
+  awards: Award[],
+  setAwards: Dispatch<SetStateAction<Award[]>>
 }
 
-const AwardList = ({setAwards, awards}:iProps) => {
+const AwardList = ({ awards, setAwards }:iProps) => {
   const [totalAwards, setTotalAwards] = useState(0)
 
   const addNewAward = () => {
@@ -18,6 +18,15 @@ const AwardList = ({setAwards, awards}:iProps) => {
       setTotalAwards(state => state + 1)
       setAwards([...awards, { ind: totalAwards, name: '' } ])
     }
+  }
+
+  const updateValue = (ind:number, value:string) => {
+    const rest = awards.filter((item) => item.ind !== ind)
+    setAwards([...rest, { ind: ind, name: value }].sort((a, b) => a.ind - b.ind))
+  }
+
+  const removeAward = (ind: number) => {
+    console.log('remove ', ind)
   }
 
   return (
@@ -34,7 +43,13 @@ const AwardList = ({setAwards, awards}:iProps) => {
       >You can define a maximum of {MAX_NUMBER_AWARDS} different prizes.</Text>
       <View>
         { awards.map((award) => (
-            <AwardItem key={award.ind} ind={award.ind} name={award.name} />
+            <AwardItem
+              key={award.ind}
+              ind={award.ind}
+              name={award.name}
+              remove={removeAward}
+              onChangeText={updateValue}
+            />
         )) }
       </View>
     </>

@@ -3,10 +3,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import { View, Text, StyleSheet, Image } from 'react-native';
-
+import { useAuthStore } from '@/presentation/auth/useAuthStore'
+import { router } from 'expo-router';
 export default function Layout() {
+  const { logOut } = useAuthStore()
   const drawerActiveColor = useThemeColor({}, 'secondary')
   const textColor = useThemeColor({}, 'primary')
+  const logOutApp = () => {
+    logOut()
+    router.replace('../../login')
+  }
   return (
     <Drawer
       initialRouteName="(users)/index"
@@ -28,7 +34,7 @@ export default function Layout() {
             <DrawerItemList {...props} />
             <DrawerItem
               label={'Sing out'}
-              onPress={() => console.log('Cerrar sesión')}
+              onPress={() => logOutApp()}
               icon={({ color, size}) => (
                 <Ionicons name='log-out-outline' size={size} color={color} />
               )}

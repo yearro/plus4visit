@@ -53,8 +53,6 @@ const LoginScreen = () => {
             </View>
           
         </LinearGradient>
-
-
       </View>
     </KeyboardAvoidingView>
   )

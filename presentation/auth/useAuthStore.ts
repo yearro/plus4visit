@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { AuthState } from './interfaces'
-import { SecureStoreGetItem, SecureStoreSetItem } from '@/helpers/secure-store.adapter'
+import { SecureStoreGetItem, SecureStoreSetItem, SecureStoreDeleteItem } from '@/helpers/secure-store.adapter'
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
   status: 'unauthenticated',
@@ -13,8 +13,14 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   },
   checkStatus: async() => {
     const likeUser = await SecureStoreGetItem('user')
-    if(likeUser)
+    if(likeUser) {
       set({ status: 'authenticated' })
-    console.log(likeUser)
+      set({ user: JSON.parse(likeUser) })
+    }
+    return true
+  },
+  logOut: async() => {
+    await SecureStoreDeleteItem('user')
+    return true
   }
 }))

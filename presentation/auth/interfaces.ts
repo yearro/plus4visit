@@ -15,7 +15,8 @@ export interface AuthState {
   status: AuthStatus,
   user?: User,
   login: (email:string, pass:string, name:string) => Promise<boolean>,
-  checkStatus: () => void
+  checkStatus: () => void,
+  logOut: () => Promise<boolean>,
 }
 
 export interface Settings {

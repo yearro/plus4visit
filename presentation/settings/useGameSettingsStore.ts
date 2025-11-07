@@ -1,17 +1,14 @@
 import { create } from 'zustand'
 
 import { SecureStoreGetItem, SecureStoreSetItem } from '@/helpers/secure-store.adapter'
-import { Award, Settings } from './interfaces'
+import { Award, Settings } from '../auth/interfaces'
 
 export const useSettingsStore = create<Settings>()((set, get) => ({
-  visitNumber: '',
+  visitNumber: '0',
   awards: [],
-  updateVisitNumber: async(visits:string) => {
+  updateSettings: async(visits:string, awardList:Award[]) => {
     set({ visitNumber: visits })
     await SecureStoreSetItem('Visits', visits)
-    return true
-  },
-  updateAwardsList: async(awardList:Award[]) => {
     set({ awards: awardList })
     await SecureStoreSetItem('AwardList', JSON.stringify(awardList))
     return true

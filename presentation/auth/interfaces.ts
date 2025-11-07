@@ -22,7 +22,6 @@ export interface AuthState {
 export interface Settings {
   visitNumber: string,
   awards: Award[],
-  updateVisitNumber: (visit:string) => Promise<boolean>,
-  updateAwardsList: (arg0:Award[]) => Promise<boolean>,
+  updateSettings: (arg0:string, arg1:Award[]) => Promise<boolean>,
   getSettings: () => Promise<boolean>,
 }

@@ -57,7 +57,7 @@ export default function Layout() {
         name="(settings)/index"
         options={{
           drawerLabel: 'Settings',
-          title: 'App settings',
+          title: 'Game settings',
           drawerIcon: ({ color, size }) => (
             <Ionicons name='cog-outline' size={size} color={color} />
           )

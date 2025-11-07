@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import ThemedView from '@/components/ThemedView'
@@ -7,20 +7,23 @@ import ThemedButton from '@/components/ThemedButton'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AwardList from '@/components/AwardList'
 import { Award } from '@/presentation/auth/interfaces'
-
+import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
 const SettingsScreen = () => {
+  const { updateSettings, awards, visitNumber } = useSettingsStore()
+  const [visits, setVisits] = useState(visitNumber)
+  const [awardList, setAwardList] = useState<Award[]>(awards)
   const insets = useSafeAreaInsets()
   const colorBorder = useThemeColor({}, 'secondary')
-  const [visits, setVisits] = useState('0')
-  const [awards, setAwards] = useState<Award[]>([])
 
   const handleNumericChange = (text:string) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     setVisits(numericValue);
   };
 
-  const saveChanges = () => {
-    console.log('Save changes', awards)
+  const saveChangess = () => {
+    if(visits == '' )
+      setVisits('0')
+    updateSettings(visits, awardList)
   }
 
   return (
@@ -46,13 +49,13 @@ const SettingsScreen = () => {
           <View  style={[styles.section, { borderColor: colorBorder }]} />
           <View>
             <AwardList
-              awards={awards}
-              setAwards={setAwards}
+              awards={awardList}
+              setAwards={setAwardList}
             />
           </View>
           <View>
             <ThemedButton
-              onPress={() => saveChanges()}
+              onPress={() => saveChangess()}
               icon='save-outline'
               typeButton='Secondary'
             >Save changes</ThemedButton>

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import ThemedView from '@/components/ThemedView'
@@ -62,7 +62,6 @@ const SettingsScreen = () => {
               typeButton='Secondary'
             >Save changes</ThemedButton>
           </View>
-
         </ScrollView>
       </ThemedView>
     </KeyboardAvoidingView>

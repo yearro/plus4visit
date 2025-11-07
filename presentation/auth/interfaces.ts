@@ -18,15 +18,10 @@ export interface AuthState {
   checkStatus: () => void
 }
 
-type Segment = {
-  label:string,
-  color:string
-}
-
 export interface Settings {
-  visitNumber: number,
-  segments: Segment[],
-  updateVisitNumber: (visit:number) => Promise<boolean>,
-  addSegment: (label:string, color:string) => Promise<boolean>,
-  deleteSegment: (label:string) => Promise<boolean>
+  visitNumber: string,
+  awards: Award[],
+  updateVisitNumber: (visit:string) => Promise<boolean>,
+  updateAwardsList: (arg0:Award[]) => Promise<boolean>,
+  getSettings: () => Promise<boolean>,
 }

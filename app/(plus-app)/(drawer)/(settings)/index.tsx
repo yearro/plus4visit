@@ -20,10 +20,12 @@ const SettingsScreen = () => {
     setVisits(numericValue);
   };
 
-  const saveChangess = () => {
+  const saveChangess = async() => {
     if(visits == '' )
       setVisits('0')
-    updateSettings(visits, awardList)
+    const result = await updateSettings(visits, awardList)
+    if(result)
+      Alert.alert('Configuration changes', 'The changes were saved');
   }
 
   return (

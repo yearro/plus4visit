@@ -1,27 +1,11 @@
 import React from 'react'
-import { Text, View } from 'react-native'
 import { Formik } from 'formik'
 import ThemedTextInput from './ThemedTextInput'
 import ThemedButton from './ThemedButton'
 import { loginValidationSchema } from '@/presentation/auth/SchemaValidationLogin'
-import { Ionicons } from '@expo/vector-icons'
-import { useThemeColor } from '@/hooks/use-theme-color'
 import { useAuthStore } from '@/presentation/auth/useAuthStore'
 import { router } from 'expo-router'
-
-const ErrorMessage = ({error=''}) => {
-  const errorColor = useThemeColor({}, 'error')
-  return(
-    <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-    <Ionicons
-      name="close-circle-outline"
-      size={20}
-      color={errorColor}
-    />
-      <Text style={{ color: 'white', fontFamily: 'MontserratBold', marginLeft: 5 }}> {error} </Text>
-  </View>
-  )
-}
+import ErrorMessage from './ErrorMessage'
 
 const LoginForm = () => {
   const { login } = useAuthStore()

@@ -4,9 +4,11 @@ import ThemedView from '@/components/ThemedView'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import ThemedButton from '@/components/ThemedButton'
 import { newClientValidationSchema } from '@/presentation/settings/SchemaValidationNewClient'
+import ErrorMessage from '@/components/ErrorMessage'
 
 const SurveyScreen = () => {
   const [clientEmail, setClientEmail] = useState('ejemplo@email.com')
+  const [emailError, setEmailError] = useState('')
 
   const saveClient = () => {
     newClientValidationSchema
@@ -15,7 +17,7 @@ const SurveyScreen = () => {
         console.log('Validation passed ', valid)
       })
       .catch((error) => {
-        console.log('Validation failed ', error)
+        setEmailError(error.message)
       })
   }
   return (
@@ -31,6 +33,11 @@ const SurveyScreen = () => {
               value={clientEmail}
               onChangeText={setClientEmail}
             />
+            <View style={{ alignItems: 'center'}}>
+              {
+                emailError.length !== 0 && (<ErrorMessage type='Secondary' error={emailError} />)
+              }
+            </View>
             <ThemedButton
               onPress={() => saveClient()}
               icon='gift-outline'

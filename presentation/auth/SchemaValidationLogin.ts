@@ -1,8 +1,9 @@
 import * as Yup from 'yup';
+import { EMAIL_RE } from '@/constants/validations'
 export const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email')
-    .required('Email is required'),
+    .required('Email is required')
+    .matches(EMAIL_RE, "Invalid email address"),
   pass: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .required('Password is required'),

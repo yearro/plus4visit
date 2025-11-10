@@ -20,7 +20,7 @@ const SettingsScreen = () => {
     setVisits(numericValue);
   };
 
-  const saveChangess = async() => {
+  const saveChanges = async() => {
     if(visits == '' )
       setVisits('0')
     const result = await updateSettings(visits, awardList)
@@ -57,7 +57,7 @@ const SettingsScreen = () => {
           </View>
           <View>
             <ThemedButton
-              onPress={() => saveChangess()}
+              onPress={() => saveChanges()}
               icon='save-outline'
               typeButton='Secondary'
             >Save changes</ThemedButton>

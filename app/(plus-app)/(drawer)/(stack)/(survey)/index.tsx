@@ -4,11 +4,14 @@ import ThemedView from '@/components/ThemedView'
 import ExperienceMeter from '@/components/ExperienceMeter'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import EmailExperienceMeter from '@/components/EmailExperienceMeter'
+import ThemedTextInput from '@/components/ThemedTextInput'
+import ThemedButton from '@/components/ThemedButton'
 
 const SurveyScreen = () => {
   const secondary = useThemeColor({}, 'secondary')
   const [surveyStep, setSurveyStep] = useState(0)
   const [experience, setExperience] = useState(0)
+  const [opinion, setOpinion] = useState('')
 
   const successEmail = (email:string) => {
     console.log('email', email)
@@ -17,6 +20,11 @@ const SurveyScreen = () => {
 
   const selectExperience = (id:number) => {
     setExperience(id)
+    setSurveyStep((prev) => prev + 1)
+  }
+
+  const sendSurvey = () => {
+    console.log('Send opinion')
   }
 
   return (
@@ -31,15 +39,31 @@ const SurveyScreen = () => {
             </View>
             { surveyStep === 0 && (
              <EmailExperienceMeter
-                email=''
+                email='cliente@plus4visit.com'
                 onSuccess={successEmail}
-             />
-            ) }
-            { surveyStep === 1 && (
+             />)
+            }{ surveyStep === 1 && (
               <ExperienceMeter
                 onPress={selectExperience}
-              />
-            )}
+              />)
+            }{
+              surveyStep === 2 && (
+                <>
+                  <ThemedTextInput
+                    icon={'megaphone-outline'}
+                    multiline={true}
+                    value={opinion}
+                    onChangeText={setOpinion}
+                    typeInput='Primary'
+                    placeholder='Share your opinion about our service'
+                  />
+                  <ThemedButton
+                    onPress={() => sendSurvey()}
+                    typeButton='Secondary'
+                    >Send survey</ThemedButton>
+                </>
+              )
+            }
           </View>
         </ScrollView>
       </ThemedView>

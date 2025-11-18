@@ -10,7 +10,7 @@ export async function createAppTables() {
     );
     CREATE UNIQUE INDEX IF NOT EXISTS client_email ON clients(email);
   
-    CREATE TABLE IF NOT EXISTS OPINIONS (
+    CREATE TABLE IF NOT EXISTS opinions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER,
       satisfaction INTEGER DEFAULT 1,

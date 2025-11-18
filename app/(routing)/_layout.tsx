@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuthStore } from '@/presentation/auth/useAuthStore'
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore' 
 import { Redirect } from 'expo-router'
-import { createAppTables } from '@/lib/schema'
+import { createAppTables } from '@/services/schema'
 
 const HomeScreen = () => {
   const { status, checkStatus } = useAuthStore()

@@ -6,17 +6,26 @@ type Client = {
   visits: number;
 }
 
+type Opinion = {
+  user_id: number;
+  satisfaction: number;
+  opinion: string;
+}
+
+export const addOpinion = async(user_id:number, satisfaction:number, opinion:string) => {
+  const db = await getAppDB()
+  return  await db.runAsync('INSERT INTO opinions (user_id, satisfaction, opinion) VALUES (?,?,?)', user_id, satisfaction, opinion);
+}
+
 export const getClient = async(clientEmail:string):Promise<Client | null> => {
   const db = await getAppDB()
-  const client: Client | null = await db.getFirstAsync(
+  return await db.getFirstAsync(
     `SELECT * FROM clients WHERE email = ?`,
     [clientEmail])
-  return client
 }
 
 export const addClient = async(clientEmail:string) => {
   const db = await getAppDB()
-  const clients = await db.runAsync(
+  return  await db.runAsync(
     `INSERT INTO clients (email) VALUES (?)`, clientEmail)
-  return clients
 }

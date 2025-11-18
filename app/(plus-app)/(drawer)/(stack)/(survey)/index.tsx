@@ -6,14 +6,17 @@ import { useThemeColor } from '@/hooks/use-theme-color'
 import EmailExperienceMeter from '@/components/EmailExperienceMeter'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import ThemedButton from '@/components/ThemedButton'
-import { getClient, addClient } from '@/services/dataService'
+import { getClient, addClient, addOpinion } from '@/services/dataService'
+import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
 
 const SurveyScreen = () => {
+  const { visitNumber } = useSettingsStore()
   const secondary = useThemeColor({}, 'secondary')
   const [surveyStep, setSurveyStep] = useState(0)
   const [experience, setExperience] = useState(0)
   const [email, setEmail] = useState('cliente@plus4visit.com')
   const [opinion, setOpinion] = useState('')
+
 
   const successEmail = (email:string) => {
     setEmail(email)
@@ -29,7 +32,19 @@ const SurveyScreen = () => {
     try {
       const client = await getClient(email)
       if(client) {
-        console.log('client ', client.visits)
+        await addOpinion(client.id, experience, opinion)
+
+        /*
+        console.log('4 % visitNumber ', 4 % parseInt(visitNumber))
+        console.log('5 % visitNumber ', 5 % parseInt(visitNumber))
+        console.log('9 % visitNumber ', 9 % parseInt(visitNumber))
+        console.log('10 % visitNumber ', 10 % parseInt(visitNumber))
+        console.log('11 % visitNumber ', 11 % parseInt(visitNumber))
+        console.log('19 % visitNumber ', 19 % parseInt(visitNumber))
+        console.log('20 % visitNumber ', 20 % parseInt(visitNumber))
+        console.log('21 % visitNumber ', 21 % parseInt(visitNumber))
+        */
+        
 
       } else {
         console.log('New client')
@@ -37,7 +52,7 @@ const SurveyScreen = () => {
       }
       
     } catch (error) {
-      Alert.alert('Error', 'Problems with data insertion')
+      Alert.alert('Error', 'Problems saving the survey')
     }
   }
 

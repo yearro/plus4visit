@@ -1,4 +1,5 @@
 import { getAppDB } from '@/services/db'
+import { number } from 'yup';
 
 type Client = {
   id: number;
@@ -28,4 +29,9 @@ export const addClient = async(clientEmail:string) => {
   const db = await getAppDB()
   return  await db.runAsync(
     `INSERT INTO clients (email) VALUES (?)`, clientEmail)
+}
+
+export const updateClientVisits = async(email:string, visits:number) => {
+  const db = await getAppDB()
+  return await db.runAsync('UPDATE clients SET visits = ? WHERE email = ?', [visits, email]);
 }

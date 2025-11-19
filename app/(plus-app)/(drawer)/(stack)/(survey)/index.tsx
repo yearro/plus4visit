@@ -6,8 +6,9 @@ import { useThemeColor } from '@/hooks/use-theme-color'
 import EmailExperienceMeter from '@/components/EmailExperienceMeter'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import ThemedButton from '@/components/ThemedButton'
-import { getClient, addClient, addOpinion } from '@/services/dataService'
+import { getClient, addClient, addOpinion, updateClientVisits } from '@/services/dataService'
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
+import { Redirect, router } from 'expo-router'
 
 const SurveyScreen = () => {
   const { visitNumber } = useSettingsStore()
@@ -32,24 +33,20 @@ const SurveyScreen = () => {
     try {
       const client = await getClient(email)
       if(client) {
-        await addOpinion(client.id, experience, opinion)
-
-        /*
-        console.log('4 % visitNumber ', 4 % parseInt(visitNumber))
-        console.log('5 % visitNumber ', 5 % parseInt(visitNumber))
-        console.log('9 % visitNumber ', 9 % parseInt(visitNumber))
-        console.log('10 % visitNumber ', 10 % parseInt(visitNumber))
-        console.log('11 % visitNumber ', 11 % parseInt(visitNumber))
-        console.log('19 % visitNumber ', 19 % parseInt(visitNumber))
-        console.log('20 % visitNumber ', 20 % parseInt(visitNumber))
-        console.log('21 % visitNumber ', 21 % parseInt(visitNumber))
-        */
-        
-
+        const aver = await addOpinion(client.id, experience, opinion)
+        console.log('aver ', aver)
+        const newVisits = client.visits + 1
+        const aver2 = await updateClientVisits(client.email, newVisits)
+        console.log('aver2 ', aver2)
+        if(newVisits % parseInt(visitNumber) === 0) {
+          router.push(`./${client.visits}`)
+          return
+        }
       } else {
         console.log('New client')
-        // await addClient(email)
+        await addClient(email)
       }
+      
       
     } catch (error) {
       Alert.alert('Error', 'Problems saving the survey')

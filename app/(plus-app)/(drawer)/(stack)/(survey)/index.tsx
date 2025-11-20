@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, ScrollView, StyleSheet, Alert } from 'react-native'
+import { View, Text, KeyboardAvoidingView, ScrollView, StyleSheet, Alert, Image, ImageBackground, ImageBackgroundBase } from 'react-native'
 import React, { useState } from 'react'
 import ThemedView from '@/components/ThemedView'
 import ExperienceMeter from '@/components/ExperienceMeter'
@@ -18,6 +18,12 @@ const SurveyScreen = () => {
   const [email, setEmail] = useState('cliente@plus4visit.com')
   const [opinion, setOpinion] = useState('')
 
+  const cleanData = () => {
+    setEmail('')
+    setOpinion('')
+    setSurveyStep(0)
+    setExperience(0)
+  }
 
   const successEmail = (email:string) => {
     setEmail(email)
@@ -30,14 +36,15 @@ const SurveyScreen = () => {
   }
 
   const sendSurvey = async() => {
+    
     try {
       const client = await getClient(email)
       if(client) {
         const aver = await addOpinion(client.id, experience, opinion)
-        console.log('aver ', aver)
+        console.log('addOpinion ', aver)
         const newVisits = client.visits + 1
         const aver2 = await updateClientVisits(client.email, newVisits)
-        console.log('aver2 ', aver2)
+        console.log('updateClientVisits ', aver2)
         if(newVisits % parseInt(visitNumber) === 0) {
           router.push(`./${client.visits}`)
           return
@@ -46,8 +53,7 @@ const SurveyScreen = () => {
         console.log('New client')
         await addClient(email)
       }
-      
-      
+      setSurveyStep((prev) => prev + 1)
     } catch (error) {
       Alert.alert('Error', 'Problems saving the survey')
     }
@@ -89,6 +95,22 @@ const SurveyScreen = () => {
                     >Send survey</ThemedButton>
                 </>
               )
+            }{
+              surveyStep === 3 && (
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={require('@/assets/images/Thanks.jpg')}
+                    style={styles.image}
+                    resizeMode='cover'
+                  />
+                  <Text style={styles.message}>
+                    Thank you for taking the survey; your feedback will be very helpful in our improvement efforts.
+                  </Text>
+                  <ThemedButton
+                    onPress={() => cleanData()}
+                    typeButton='Secondary'
+                    >New survey</ThemedButton>
+                </View>)
             }
           </View>
         </ScrollView>
@@ -109,8 +131,19 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontFamily: 'MontserratBold'
   },
-  title: {
+  message: {
+    marginVertical: 10,
     fontSize: 18,
-    fontFamily: 'MontserratBold'
+    fontFamily: 'MontserratLight'
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+    width: 300,
+    height: 300
+  },
+  imageContainer: {
+    flex: 1,
+    alignItems: 'center'
   }
 })

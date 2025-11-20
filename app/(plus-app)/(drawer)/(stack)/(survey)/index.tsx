@@ -40,11 +40,9 @@ const SurveyScreen = () => {
     try {
       const client = await getClient(email)
       if(client) {
-        const aver = await addOpinion(client.id, experience, opinion)
-        console.log('addOpinion ', aver)
+        await addOpinion(client.id, experience, opinion)
         const newVisits = client.visits + 1
-        const aver2 = await updateClientVisits(client.email, newVisits)
-        console.log('updateClientVisits ', aver2)
+        await updateClientVisits(client.email, newVisits)
         if(newVisits % parseInt(visitNumber) === 0) {
           router.push(`./${client.visits}`)
           return

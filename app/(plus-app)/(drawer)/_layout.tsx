@@ -47,7 +47,7 @@ export default function Layout() {
         name="(users)/index"
         options={{
           drawerLabel: 'Clients',
-          title: 'Client Management',
+          title: 'Client List',
           drawerIcon: ({ color, size }) => (
             <Ionicons name='person-circle-outline' size={size} color={color} />
           )

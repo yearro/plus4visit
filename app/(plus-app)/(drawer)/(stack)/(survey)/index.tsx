@@ -8,7 +8,7 @@ import ThemedTextInput from '@/components/ThemedTextInput'
 import ThemedButton from '@/components/ThemedButton'
 import { getClient, addClient, addOpinion, updateClientVisits } from '@/services/dataService'
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
-import { Redirect, router } from 'expo-router'
+import { router } from 'expo-router'
 
 const SurveyScreen = () => {
   const { visitNumber } = useSettingsStore()
@@ -36,7 +36,6 @@ const SurveyScreen = () => {
   }
 
   const sendSurvey = async() => {
-    
     try {
       const client = await getClient(email)
       if(client) {
@@ -48,7 +47,6 @@ const SurveyScreen = () => {
           return
         }
       } else {
-        console.log('New client')
         await addClient(email)
       }
       setSurveyStep((prev) => prev + 1)

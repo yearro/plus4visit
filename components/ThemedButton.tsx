@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useThemeColor } from '@/hooks/use-theme-color'
 
 interface iProps extends PressableProps {
-  children: string,
+  children?: string,
   icon?: keyof typeof Ionicons.glyphMap,
   typeButton?: 'Primary' | 'Secondary'
 }

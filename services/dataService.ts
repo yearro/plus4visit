@@ -1,7 +1,7 @@
 import { getAppDB } from '@/services/db'
 import { number } from 'yup';
 
-type Client = {
+export type Client = {
   id: number;
   email: string;
   visits: number;
@@ -23,6 +23,11 @@ export const getClient = async(clientEmail:string):Promise<Client | null> => {
   return await db.getFirstAsync(
     `SELECT * FROM clients WHERE email = ?`,
     [clientEmail])
+}
+
+export const getAllClients = async():Promise<Client[] | null> => {
+  const db = await getAppDB()
+  return await db.getAllAsync('SELECT * FROM clients')
 }
 
 export const addClient = async(clientEmail:string) => {

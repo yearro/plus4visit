@@ -12,20 +12,33 @@ interface iProps {
 const ClientItem = ({id, email, visits, onPress}:iProps) => {
   return (
     <View style={styles.clientContainer}>
-      <View>
-        <Text style={styles.text}>{email}</Text>
+      <View style={{ flex: 1 }}>
+        <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>{email}</Text>
         <Text style={styles.visits}>{visits} visits</Text>
       </View>
-      <TouchableOpacity
-        onPress={() => onPress(id)}
-        style={styles.button}
-      >
-        <Ionicons
-          name='trash-outline'
-          size={30}
-          color={'red'}
-        />
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => onPress(id)}
+          style={styles.button}
+        >
+          <Ionicons
+            name='trash-outline'
+            size={30}
+            color={'red'}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => onPress(id)}
+          style={styles.button}
+        >
+          <Ionicons
+            name='chevron-forward-outline'
+            size={30}
+            color={'black'}
+          />
+        </TouchableOpacity>
+      </View>
+      
     </View>
   )
 }
@@ -38,13 +51,17 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginLeft: 10,
     marginVertical: 10,
     paddingBottom: 10,
-    justifyContent: 'space-between'},
+    },
   text: {
     fontSize: 18,
     fontFamily: 'MontserratBold'},
+  buttonContainer: {
+    flexDirection: 'row',
+    marginLeft: 10,
+  },
   button: {
     width: 44,
     height: 44,

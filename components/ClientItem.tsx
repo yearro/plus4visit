@@ -6,10 +6,11 @@ interface iProps {
   id: number;
   email: string;
   visits: number;
-  onPress: (arg:number) => void
+  onPress: (arg:number) => void,
+  onRedirect: (arg:number) => void,
 }
 
-const ClientItem = ({id, email, visits, onPress}:iProps) => {
+const ClientItem = ({id, email, visits, onPress, onRedirect}:iProps) => {
   return (
     <View style={styles.clientContainer}>
       <View style={{ flex: 1 }}>
@@ -28,7 +29,7 @@ const ClientItem = ({id, email, visits, onPress}:iProps) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => onPress(id)}
+          onPress={() => onRedirect(id)}
           style={styles.button}
         >
           <Ionicons

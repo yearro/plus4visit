@@ -7,7 +7,7 @@ export type Client = {
   visits: number;
 }
 
-type Opinion = {
+export type Opinion = {
   user_id: number;
   satisfaction: number;
   opinion: string;
@@ -23,6 +23,13 @@ export const getClient = async(clientEmail:string):Promise<Client | null> => {
   return await db.getFirstAsync(
     `SELECT * FROM clients WHERE email = ?`,
     [clientEmail])
+}
+
+export const getUserOpinions = async(clientId: number):Promise<Opinion[] | null> => {
+  const db = await getAppDB()
+  return await db.getAllAsync(
+    `SELECT * FROM opinions WHERE user_id = ?`,
+    [clientId])
 }
 
 export const getAllClients = async():Promise<Client[] | null> => {

@@ -3,12 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
-const HeaderComponent = () => (
-  <View style={styles.headerContainer}>
-    <Text style={styles.headerText}>Client list</Text>
-  </View>
-);
+import { router } from 'expo-router'
 
 const UsersScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -16,6 +11,9 @@ const UsersScreen = () => {
 
   useEffect(() => {
     onPullToRefresh()
+    return () => {
+      setIsRefreshing(false)
+    }
   },[])
 
   const onPullToRefresh = async() => {
@@ -27,6 +25,9 @@ const UsersScreen = () => {
 
   const deleteClient = (id:number) => {
     console.log('delete ', id)
+  }
+  const checkVisits = (id:number) => {
+    router.push(`./${id}`)
   }
 
   return (
@@ -41,9 +42,9 @@ const UsersScreen = () => {
             email={item.email}
             visits={item.visits}
             onPress={deleteClient}
+            onRedirect={checkVisits}
           />
         )}
-       
         refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={onPullToRefresh} />
         }

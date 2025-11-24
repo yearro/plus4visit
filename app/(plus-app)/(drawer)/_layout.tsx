@@ -15,7 +15,7 @@ export default function Layout() {
   }
   return (
     <Drawer
-      initialRouteName="(users)/index"
+      initialRouteName="(users)"
       screenOptions={{
         headerShadowVisible: true,
         drawerActiveTintColor: drawerActiveColor,
@@ -44,7 +44,7 @@ export default function Layout() {
       }
     >
       <Drawer.Screen
-        name="(users)/index"
+        name="(users)"
         options={{
           drawerLabel: 'Clients',
           title: 'Client List',

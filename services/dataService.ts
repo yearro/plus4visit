@@ -8,6 +8,7 @@ export type Client = {
 }
 
 export type Opinion = {
+  id: number;
   user_id: number;
   satisfaction: number;
   opinion: string;

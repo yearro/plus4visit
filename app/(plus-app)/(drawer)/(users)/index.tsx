@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, RefreshControl } from 'react-native'
+import { FlatList, StyleSheet, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'

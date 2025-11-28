@@ -1,9 +1,10 @@
-import { Text, Button, StyleSheet, FlatList, View, Image } from 'react-native'
+import { Text, Button, StyleSheet, FlatList, View, Image, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams,router } from 'expo-router'
 import { getUserOpinions, Opinion } from '@/services/dataService'
 import ClientSensation from '@/components/ClientSensation'
+import { Ionicons } from '@expo/vector-icons'
 
 const VisitsForUser = () => {
   const { id } = useLocalSearchParams()
@@ -18,11 +19,18 @@ const VisitsForUser = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>VisitsForUser {id}</Text>
-      <Button
-        title="Go Back"
-        onPress={() => router.back()}
-      />
+      <View style={{ alignItems: 'flex-end'}} >
+        <TouchableOpacity
+          onPress={() => router.back()}
+          style={styles.button}
+        >
+          <Ionicons
+            name={'chevron-back-outline'}
+            size={30}
+            color={'black'}
+          /><Text style={styles.opinionText} >Go back</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.title}>Customer satisfaction:</Text>
       <ClientSensation data={opinions} />
       {
@@ -70,5 +78,11 @@ const styles = StyleSheet.create({
     marginBottom: 15},
   opinionText: {
     fontFamily: 'MontserratLight',
-    fontSize: 16}
+    fontSize: 16},
+  button: {
+    flexDirection: 'row',
+    width: 120,
+    height: 44,
+    justifyContent: 'flex-start',
+    alignItems: 'center'},
 })

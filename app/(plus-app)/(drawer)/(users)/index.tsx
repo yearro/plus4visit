@@ -13,6 +13,7 @@ const UsersScreen = () => {
     onPullToRefresh()
     return () => {
       setIsRefreshing(false)
+      setClients([])
     }
   },[])
 

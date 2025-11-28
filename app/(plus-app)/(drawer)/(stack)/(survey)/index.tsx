@@ -43,7 +43,7 @@ const SurveyScreen = () => {
         const newVisits = client.visits + 1
         await updateClientVisits(client.email, newVisits)
         if(newVisits % parseInt(visitNumber) === 0) {
-          router.push(`./${client.visits}`)
+          router.push(`./${client.email}`)
           return
         }
       } else {

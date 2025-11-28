@@ -63,10 +63,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     flexDirection: 'row'},
   image: {
+    marginBottom: 10,
     width: 30,
     height: 30},
   text: {
-    fontFamily: 'MontserratRegular',
-    fontSize: 15,
+    fontFamily: 'MontserratBold',
+    fontSize: 16,
   }
 })

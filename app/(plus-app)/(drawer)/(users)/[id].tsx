@@ -25,19 +25,25 @@ const VisitsForUser = () => {
       />
       <Text style={styles.title}>Customer satisfaction:</Text>
       <ClientSensation data={opinions} />
-      <Text style={styles.title}>Customer opinions:</Text>
-      <FlatList
-        data={opinions}
-        keyExtractor={item => `${item.id}` }
-        renderItem={({item}) => {
-          if(item.opinion.length == 0)
-            return null
-          return (
-            <View style={styles.opinionContainer}>
-              <Text style={styles.opinionText}>{ item.opinion }</Text>
-            </View>)
-        }}
-      />
+      {
+        opinions?.length !== 0 && (
+          <>
+            <Text style={styles.title}>Customer opinions:</Text>
+            <FlatList
+              data={opinions}
+              keyExtractor={item => `${item.id}` }
+              renderItem={({item}) => {
+                if(item.opinion.length == 0)
+                  return null
+                return (
+                  <View style={styles.opinionContainer}>
+                    <Text style={styles.opinionText}>{ item.opinion }</Text>
+                  </View>)
+              }}
+            />
+          </>
+        )
+      }
     </SafeAreaView>
   )
 }

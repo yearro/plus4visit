@@ -19,7 +19,8 @@ const SurveyScreen = () => {
   const [opinion, setOpinion] = useState('')
 
   const cleanData = () => {
-    setEmail('')
+    // Only for testing
+    //setEmail('')
     setOpinion('')
     setSurveyStep(0)
     setExperience(0)
@@ -43,6 +44,7 @@ const SurveyScreen = () => {
         const newVisits = client.visits + 1
         await updateClientVisits(client.email, newVisits)
         if(newVisits % parseInt(visitNumber) === 0) {
+          cleanData()
           router.push(`./${client.email}`)
           return
         }

@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet, Modal, Pressable, Alert } from 'react-native'
+import { View, Text, StyleSheet, Modal, Pressable, Alert, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useLocalSearchParams } from 'expo-router'
 import Wheel from 'react-native-spin-the-wheel';
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
 import { colorCodes } from '@/constants/colors';
+import ThemedButton from '@/components/ThemedButton';
+import { router } from 'expo-router';
 
 type tSegment = {
   text: string;
@@ -11,11 +12,11 @@ type tSegment = {
 const GameScreen = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const { awards } = useSettingsStore()
-  const { id } = useLocalSearchParams()
   const [result, setResult] = useState<tSegment | ''>('');
 
   useEffect(() => {
-    setModalVisible(true)
+    if(result !== '')
+      setModalVisible(true)
   }, [result])
 
   const segments:tSegment[] = []
@@ -34,25 +35,29 @@ const GameScreen = () => {
         textColors={['black']}
         onFinished={onFinished}
         pinImage={require('@/assets/images/pin.png')}
-        // Add more props as needed
       />
       
       <Modal
         animationType="slide"
-          
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}
+        visible={modalVisible}
       >
-        <View style={styles.resultContainer} >
-          <Text style={styles.result}>Result: {result && result.text}</Text>
+        <View style={styles.awardContainer} >
+          <Image
+            source={require('@/assets/images/congrats.jpg')}
+            style={styles.image}
+            resizeMode='cover'
+          />
+            <Text style={styles.result}>Your award is:</Text>
+            <Text style={styles.awardText}>{result && result.text}</Text>
+            <ThemedButton
+              onPress={() => {
+                setModalVisible(!modalVisible)
+                router.dismiss(2)
+              }}
+              icon='newspaper-outline'
+              typeButton='Secondary'
+            >New survey</ThemedButton>
         </View>
-        <Pressable
-          onPress={() => setModalVisible(!modalVisible)}>
-          <Text>Hide Modal</Text>
-        </Pressable>
       </Modal>
     </View>
   )
@@ -65,10 +70,18 @@ const styles = StyleSheet.create({
     marginTop: 25,
     alignItems: 'center',
     justifyContent: 'center'},
-  resultContainer:{
-    marginTop: 20
-  },
-  result: {
+  awardText:{
+    marginTop: 20,
     fontFamily: 'MontserratBold',
-  }
+    marginBottom: 20,
+    fontSize: 28},
+  image: {
+    width: 250,
+    height: 250},
+  awardContainer:{
+    marginTop: 20,
+    alignItems: 'center',
+    flex: 1,},
+  result: {
+    fontFamily: 'MontserratRegular',}
 })

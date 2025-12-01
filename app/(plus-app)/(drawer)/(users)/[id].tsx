@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     marginHorizontal: 15,
     borderRadius: 10,
+    flex: 1,
     paddingHorizontal: 10},
   title:{
     fontFamily: 'MontserratBold',

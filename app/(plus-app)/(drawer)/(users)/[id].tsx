@@ -19,7 +19,7 @@ const VisitsForUser = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ alignItems: 'flex-end'}} >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }} >
         <TouchableOpacity
           onPress={() => router.back()}
           style={styles.button}
@@ -28,10 +28,10 @@ const VisitsForUser = () => {
             name={'chevron-back-outline'}
             size={30}
             color={'black'}
-          /><Text style={styles.opinionText} >Go back</Text>
+          />
         </TouchableOpacity>
+        <Text style={styles.title}>Customer satisfaction:</Text>
       </View>
-      <Text style={styles.title}>Customer satisfaction:</Text>
       <ClientSensation data={opinions} />
       {
         opinions?.length !== 0 && (
@@ -81,9 +81,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MontserratLight',
     fontSize: 16},
   button: {
-    flexDirection: 'row',
-    width: 120,
+    width: 44,
     height: 44,
-    justifyContent: 'flex-start',
-    alignItems: 'center'},
+  }
 })

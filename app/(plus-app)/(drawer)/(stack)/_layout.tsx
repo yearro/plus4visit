@@ -10,6 +10,12 @@ const StackLayout = () => {
     >
       <Stack.Screen
         name='(survey)/index'
+        options={{
+          headerLargeTitle: true,
+          headerTitle: 'Dashboard',
+          headerTransparent: true,
+          headerBlurEffect: 'light'
+        }}
       />
       <Stack.Screen
         name='(survey)/[id]'

@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, RefreshControl } from 'react-native'
+import { FlatList, StyleSheet, RefreshControl, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
@@ -33,6 +33,11 @@ const UsersScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {
+        clients?.length === 0 && (
+          <Text style={styles.headerText}>You do not have any registered clients.</Text>
+        )
+      }
       <FlatList
         data={clients}
         keyExtractor={(item) => item.email}

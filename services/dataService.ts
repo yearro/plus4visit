@@ -1,5 +1,4 @@
 import { getAppDB } from '@/services/db'
-import { number } from 'yup';
 
 export type Client = {
   id: number;
@@ -12,6 +11,7 @@ export type Opinion = {
   user_id: number;
   satisfaction: number;
   opinion: string;
+  requested_date: string;
 }
 
 export const addOpinion = async(user_id:number, satisfaction:number, opinion:string) => {

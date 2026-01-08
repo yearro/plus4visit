@@ -14,7 +14,8 @@ export async function createAppTables() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER,
       satisfaction INTEGER DEFAULT 1,
-      opinion TEXT
+      opinion TEXT,
+      requested_date DATE DEFAULT current_date
     );
   `)
   return true

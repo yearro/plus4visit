@@ -1,21 +1,23 @@
 import { FlatList, StyleSheet, RefreshControl, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { router } from 'expo-router'
+import { router, useFocusEffect } from 'expo-router'
 
 const UsersScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const [clients, setClients] = useState<Client[] | null>([])
+  const [clients, setClients] = useState<Client[] | null>(null)
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     onPullToRefresh()
-    return () => {
-      setIsRefreshing(false)
-      setClients([])
-    }
-  },[])
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [loadData])
+  );
 
   const onPullToRefresh = async() => {
     setIsRefreshing(true)

@@ -6,7 +6,7 @@ import { useThemeColor } from '@/hooks/use-theme-color'
 import EmailExperienceMeter from '@/components/EmailExperienceMeter'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import ThemedButton from '@/components/ThemedButton'
-import { getClient, addClient, addOpinion, updateClientVisits } from '@/services/dataService'
+import { getClient, addClient, addOpinion, updateClientVisits, Client } from '@/services/dataService'
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
 import { router } from 'expo-router'
 
@@ -36,9 +36,26 @@ const SurveyScreen = () => {
     setSurveyStep((prev) => prev + 1)
   }
 
-  const sendSurvey = async() => {
+  const getClientId = async(email:string):Promise<Client | null> => {
     try {
       const client = await getClient(email)
+      if(client)
+        return client
+      const newClient = await addClient(email)
+      return {
+        id: newClient.lastInsertRowId,
+        email,
+        visits: 0
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Problems saving the survey')
+      return null
+    }
+  }
+
+  const sendSurvey = async() => {
+    try {
+      const client = await getClientId(email)
       if(client) {
         await addOpinion(client.id, experience, opinion)
         const newVisits = client.visits + 1
@@ -48,8 +65,6 @@ const SurveyScreen = () => {
           router.push(`./${client.email}`)
           return
         }
-      } else {
-        await addClient(email)
       }
       setSurveyStep((prev) => prev + 1)
     } catch (error) {

@@ -1,6 +1,5 @@
 import { View, Text, KeyboardAvoidingView, ScrollView, StyleSheet, Alert, Image, ImageBackground, ImageBackgroundBase } from 'react-native'
 import React, { useState } from 'react'
-import ThemedView from '@/components/ThemedView'
 import ExperienceMeter from '@/components/ExperienceMeter'
 import { useThemeColor } from '@/hooks/use-theme-color'
 import EmailExperienceMeter from '@/components/EmailExperienceMeter'
@@ -9,6 +8,7 @@ import ThemedButton from '@/components/ThemedButton'
 import { getClient, addClient, addOpinion, updateClientVisits, Client } from '@/services/dataService'
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
 import { router } from 'expo-router'
+import GeneralContentView from '@/components/GeneralContentView'
 
 const SurveyScreen = () => {
   const { visitNumber } = useSettingsStore()
@@ -76,8 +76,8 @@ const SurveyScreen = () => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
     >
-      <ThemedView>
-        <ScrollView>
+      <GeneralContentView>
+        <ScrollView style={{ paddingHorizontal: 20 }}>
           <View>
             <View style={styles.header}>
               <Text style={[styles.headerTitle, { color: secondary}]}>Step {surveyStep + 1 }</Text>
@@ -127,7 +127,7 @@ const SurveyScreen = () => {
             }
           </View>
         </ScrollView>
-      </ThemedView>
+      </GeneralContentView>
     </KeyboardAvoidingView>
   )
 }
@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    paddingTop: 20
   },
   headerTitle: {
     fontSize: 22,

@@ -2,12 +2,12 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Alert } from 
 import React, { useState } from 'react'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import { useThemeColor } from '@/hooks/use-theme-color'
-import ThemedView from '@/components/ThemedView'
 import ThemedButton from '@/components/ThemedButton'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AwardList from '@/components/AwardList'
 import { Award } from '@/presentation/auth/interfaces'
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
+import GeneralContentView from '@/components/GeneralContentView'
 const SettingsScreen = () => {
   const { updateSettings, awards, visitNumber } = useSettingsStore()
   const [visits, setVisits] = useState(visitNumber)
@@ -32,38 +32,38 @@ const SettingsScreen = () => {
     <KeyboardAvoidingView
       style={{ flex: 1, marginBottom: insets.bottom }}
     >
-      <ThemedView>
-        <ScrollView>
-          <View style={styles.headerSection}>
-            <Text style={ styles.title }>Number of visits</Text>
-            <View style={{ width: 200 }}>
-              <ThemedTextInput
-                keyboardType='numeric'
-                icon='ribbon-outline'
-                value={visits.toString()}
-                onChangeText={handleNumericChange}
+      <GeneralContentView>
+          <ScrollView style={{ paddingHorizontal: 20}}>
+            <View style={styles.headerSection}>
+              <Text style={ styles.title }>Number of visits</Text>
+              <View style={{ width: 200 }}>
+                <ThemedTextInput
+                  keyboardType='numeric'
+                  icon='ribbon-outline'
+                  value={visits.toString()}
+                  onChangeText={handleNumericChange}
+                />
+              </View>
+            </View>
+            <Text
+              style={styles.description}
+            >After this number of visits the client will have the opportunity to participate in a game.</Text>
+            <View  style={[styles.section, { borderColor: colorBorder }]} />
+            <View>
+              <AwardList
+                awards={awardList}
+                setAwards={setAwardList}
               />
             </View>
-          </View>
-          <Text
-            style={styles.description}
-          >After this number of visits the client will have the opportunity to participate in a game.</Text>
-          <View  style={[styles.section, { borderColor: colorBorder }]} />
-          <View>
-            <AwardList
-              awards={awardList}
-              setAwards={setAwardList}
-            />
-          </View>
-          <View>
-            <ThemedButton
-              onPress={() => saveChanges()}
-              icon='save-outline'
-              typeButton='Secondary'
-            >Save changes</ThemedButton>
-          </View>
-        </ScrollView>
-      </ThemedView>
+            <View>
+              <ThemedButton
+                onPress={() => saveChanges()}
+                icon='save-outline'
+                typeButton='Secondary'
+              >Save changes</ThemedButton>
+            </View>
+          </ScrollView>
+      </GeneralContentView>
     </KeyboardAvoidingView>
   )
 }

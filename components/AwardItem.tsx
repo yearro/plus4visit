@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
     marginBottom: 10,
-    flex: 1
+    flex: 1,
+    boxShadow: "0px 2px 8px rgba(0,0,0,0.05)",
   },
   counterContainer: {
     width: 50,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     flex:1
   },
   deleteBtn: {
-    marginLeft: 5,
+    marginLeft: 10,
     paddingBottom: 5
   }
 });

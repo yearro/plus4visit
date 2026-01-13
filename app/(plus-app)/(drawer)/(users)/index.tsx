@@ -4,6 +4,7 @@ import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, useFocusEffect } from 'expo-router'
+import GeneralContentView from '@/components/GeneralContentView'
 
 const UsersScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -34,30 +35,32 @@ const UsersScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      {
-        clients?.length === 0 && (
-          <Text style={styles.headerText}>You do not have any registered clients.</Text>
-        )
-      }
-      <FlatList
-        data={clients}
-        keyExtractor={(item) => item.email}
-        renderItem={({ item }) => (
-          <ClientItem
-            key={item.email}
-            id={item.id}
-            email={item.email}
-            visits={item.visits}
-            onPress={deleteClient}
-            onRedirect={checkVisits}
-          />
-        )}
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onPullToRefresh} />
+    <GeneralContentView>
+      <SafeAreaView style={styles.container}>
+        {
+          clients?.length === 0 && (
+            <Text style={styles.headerText}>You do not have any registered clients.</Text>
+          )
         }
-      />
-    </SafeAreaView>
+        <FlatList
+          data={clients}
+          keyExtractor={(item) => item.email}
+          renderItem={({ item }) => (
+            <ClientItem
+              key={item.email}
+              id={item.id}
+              email={item.email}
+              visits={item.visits}
+              onPress={deleteClient}
+              onRedirect={checkVisits}
+            />
+          )}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onPullToRefresh} />
+          }
+        />
+      </SafeAreaView>
+    </GeneralContentView>
   )
 }
 

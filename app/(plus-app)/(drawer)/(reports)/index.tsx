@@ -1,10 +1,10 @@
 import { generateMonthlyData } from "@/constants/DummyData";
 import { Color } from "@/constants/TWPalette";
-import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import { Ionicons } from "@expo/vector-icons";
+import GeneralContentView from "@/components/GeneralContentView";
 
 interface BarData {
   value: number;
@@ -99,19 +99,8 @@ export default function MinimalChart() {
     }));
   }, [monthlyData, selectedBarIndex, themeColor, theme]);
 
-  const bgColors = [
-    Color[colorThemes[colorTheme].name][100],
-    "#ffffff",
-    Color[colorThemes[colorTheme].name][100],
-  ] as const;
-
   return (
-    <LinearGradient
-      colors={bgColors}
-      style={{ flex: 1 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
+    <GeneralContentView>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
@@ -302,7 +291,7 @@ export default function MinimalChart() {
           </ScrollView>
         </View>
       </ScrollView>
-    </LinearGradient>
+    </GeneralContentView>
   );
 }
 

@@ -22,3 +22,5 @@ export const colorCodes  = [
   '#008080',
   '#ff6347'
 ];
+
+export const appBgColor = "#dbeafe"

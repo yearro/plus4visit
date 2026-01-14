@@ -1,10 +1,13 @@
 import { generateMonthlyData } from "@/constants/DummyData";
 import { Color } from "@/constants/TWPalette";
 import { useCallback, useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import { Ionicons } from "@expo/vector-icons";
 import GeneralContentView from "@/components/GeneralContentView";
+import { useFocusEffect } from "expo-router";
+import { getCountAllOpinions, Opinion } from "@/services/dataService";
+import TopReportNumbers from "@/components/TopReportNumbers";
 
 interface BarData {
   value: number;
@@ -13,26 +16,33 @@ interface BarData {
   [key: string]: any;
 }
 
-// Color themes using TWPalette
-const colorThemes = {
-  blue: { name: "blue", primary: 500, accent: 600 },
-  purple: { name: "purple", primary: 500, accent: 600 },
-  emerald: { name: "emerald", primary: 500, accent: 600 },
-  orange: { name: "orange", primary: 500, accent: 600 },
-  pink: { name: "pink", primary: 500, accent: 600 },
-  cyan: { name: "cyan", primary: 500, accent: 600 },
-} as const;
-
-type ColorTheme = keyof typeof colorThemes;
+interface ItopNumbers {
+  total: number;
+  perYear: number;
+  perMonth: number;
+}
 
 export default function MinimalChart() {
+  const [topNumbers, setTopNumbers] = useState<ItopNumbers>({ total: 0, perYear: 0, perMonth: 0 })
   const [selectedBarIndex, setSelectedBarIndex] = useState<number | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [colorTheme, setColorTheme] = useState<ColorTheme>("blue");
 
-  const theme = colorThemes[colorTheme];
-  const themeColor = Color[theme.name as keyof typeof Color];
+  // const [opinions, setOpinions] = useState<Opinion[] | null>(null)
+
+  const loadData = useCallback(() => {
+    const getOpinions = async () => {
+      const totalOpinions = await getCountAllOpinions()
+      totalOpinions && setTopNumbers({ ...topNumbers, total: totalOpinions.count })
+    }
+    getOpinions()
+  }, []);
+  
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [loadData])
+  );
 
   const getMonthName = (month: number) => {
     const months = [
@@ -79,15 +89,15 @@ export default function MinimalChart() {
       ...item,
       frontColor:
         selectedBarIndex === index
-          ? themeColor[theme.accent]
-          : themeColor[theme.primary],
+          ? '#ea580c'
+          : '#f97316',
       gradientColor:
-        selectedBarIndex === index ? themeColor[400] : themeColor[300],
+        selectedBarIndex === index ? '#fb923c' : '#fdba74',
       topLabelComponent: () =>
         selectedBarIndex === index ? (
           <Text
             style={{
-              color: themeColor[700],
+              color: '#c2410c',
               fontSize: 10,
               fontWeight: "600",
               marginBottom: 4,
@@ -97,7 +107,7 @@ export default function MinimalChart() {
           </Text>
         ) : null,
     }));
-  }, [monthlyData, selectedBarIndex, themeColor, theme]);
+  }, [monthlyData, selectedBarIndex]);
 
   return (
     <GeneralContentView>
@@ -105,63 +115,11 @@ export default function MinimalChart() {
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
       >
-        {/* Stats Cards */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            gap: 12,
-            marginVertical: 32,
-            paddingHorizontal: 16,
-          }}
-        >
-          <View style={{ flex: 1, ...styles.card }}>
-            <Text style={styles.label}>Average</Text>
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: "700",
-                color: Color.gray[900],
-                marginTop: 4,
-              }}
-            >
-              {Math.round(
-                monthlyData.reduce((sum, item) => sum + item.value, 0) /
-                  monthlyData.length
-              )}
-            </Text>
-          </View>
-
-          <View style={{ flex: 1, ...styles.card }}>
-            <Text style={styles.label}>Total</Text>
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: "700",
-                color: Color.gray[900],
-                marginTop: 4,
-              }}
-            >
-              {monthlyData.reduce((sum, item) => sum + item.value, 0)}
-            </Text>
-          </View>
-
-          <View style={{ flex: 1, ...styles.card }}>
-            <Text style={styles.label}>Peak</Text>
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: "700",
-                color: Color.gray[900],
-                marginTop: 4,
-              }}
-            >
-              {Math.max(...monthlyData.map((item) => item.value))}
-            </Text>
-          </View>
-        </View>
-
-        {/* Month Navigation */}
+        <TopReportNumbers
+          total={topNumbers.total}
+          perYear={topNumbers.perYear}
+          perMonth={topNumbers.perMonth}
+        />
         <View
           style={{
             flexDirection: "row",
@@ -237,11 +195,6 @@ export default function MinimalChart() {
               fontWeight: "500",
             }}
             showXAxisIndices={false}
-            // renderTooltip={() => (
-            //   <View style={{ backgroundColor: "white" }}>
-            //     <Text>Tooltip</Text>
-            //   </View>
-            // )}
             isAnimated
             animationDuration={300}
             onPress={(_item: BarData, index: number) => {
@@ -251,68 +204,7 @@ export default function MinimalChart() {
             dashGap={10}
           />
         </View>
-        {/* Color Theme Selector */}
-        <View style={{ paddingHorizontal: 16 }}>
-          <Text
-            style={{
-              ...styles.label,
-              marginBottom: 12,
-            }}
-          >
-            Choose Theme
-          </Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ gap: 12 }}
-          >
-            {(Object.keys(colorThemes) as ColorTheme[]).map((theme) => (
-              <Pressable
-                key={theme}
-                onPress={() => {
-                  setColorTheme(theme);
-                  setSelectedBarIndex(null);
-                }}
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: 16,
-                  backgroundColor:
-                    Color[colorThemes[theme].name as keyof typeof Color][500],
-                  borderWidth: colorTheme === theme ? 3 : 0,
-                  borderColor: Color.gray[900],
-                  boxShadow:
-                    colorTheme === theme
-                      ? "0px 2px 8px rgba(0,0,0,0.2)"
-                      : "none",
-                }}
-              />
-            ))}
-          </ScrollView>
-        </View>
       </ScrollView>
     </GeneralContentView>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#ffffff",
-    borderRadius: 16,
-    padding: 16,
-    boxShadow: "0px 2px 8px rgba(0,0,0,0.05)",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "700" as const,
-    color: Color.gray[900],
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Color.gray[600],
-  },
-  label: {
-    fontSize: 14,
-    color: Color.gray[600],
-  },
-});

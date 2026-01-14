@@ -30,14 +30,14 @@ export const getCountAllOpinions = async():Promise<Count | null> => {
 
 export const getOpinionsByMonth = async(date:string):Promise<Opinion[] | null> => {
   const db = await getAppDB()
-  return await db.getAllAsync("SELECT * FROM table_name WHERE strftime('%Y-%m', requested_date) = '2024-01'")
+  return await db.getAllAsync("SELECT * FROM opinions WHERE strftime('%Y-%m', requested_date) = '2024-01'")
 }
 
 export const getOpinionsByYear = async(year:string):Promise<Opinion[] | null> => {
   const db = await getAppDB()
-  return await db.getAllAsync(
-    `SELECT * FROM your_table WHERE STRFTIME('%Y', requested_date) = ?`, [year])
-  }
+  return await db.getFirstSync(
+    `SELECT COUNT(*) as count FROM opinions WHERE strftime('%Y', requested_date) = ?`, [year])
+}
 
 export const getClient = async(clientEmail:string):Promise<Client | null> => {
   const db = await getAppDB()

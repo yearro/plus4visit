@@ -6,7 +6,7 @@ import { BarChart } from "react-native-gifted-charts";
 import { Ionicons } from "@expo/vector-icons";
 import GeneralContentView from "@/components/GeneralContentView";
 import { useFocusEffect } from "expo-router";
-import { getCountAllOpinions, getOpinionsByYear, Opinion } from "@/services/dataService";
+import { getCountAllOpinions, getOpinionsByMonth, getOpinionsByYear, Opinion } from "@/services/dataService";
 import TopReportNumbers from "@/components/TopReportNumbers";
 
 interface BarData {
@@ -34,10 +34,11 @@ export default function MinimalChart() {
     const getOpinions = () => {
       Promise.all([
         getCountAllOpinions(),
-        getOpinionsByYear(`${new Date().getFullYear()}`)])
-        .then((values) => {
-          console.log('values ', values)
-        })
+        getOpinionsByYear(new Date().getFullYear()),
+        getOpinionsByMonth(new Date().getFullYear(), new Date().getMonth())
+      ]).then((values) => {
+        console.log('values ', values)
+      })
       /*
       const totalOpinions = await getCountAllOpinions()
       const perYear = await getOpinionsByYear(`${new Date().getFullYear()}`)

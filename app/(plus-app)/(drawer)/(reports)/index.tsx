@@ -23,11 +23,11 @@ interface ItopNumbers {
 }
 
 export default function MinimalChart() {
+  const [chartKey, setChartKey] = useState(Date.now());
   const [topNumbers, setTopNumbers] = useState<ItopNumbers>({ total: 0, perYear: 0, perMonth: 0 })
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [opinions, setOpinions] = useState<Opinion[] | null>(null)
-  const [selectedBarIndex, setSelectedBarIndex] = useState<number | null>(null);
+  const [opinions, setOpinions] = useState<Opinion[] | null>(null);
   const loadData = useCallback(() => {
     const getOpinions = async() => {
       setCurrentMonth(new Date().getMonth())
@@ -92,10 +92,11 @@ export default function MinimalChart() {
 
   const transformedData = useMemo(() => {
     if (!opinions) return [];
+    setChartKey(Date.now());
     return satisfactionLevel.map((item, index) => ({
         value: opinions?.filter(option => option.satisfaction === item.id).length,
-        frontColor: selectedBarIndex === index ? '#ea580c' : '#f97316',
-        gradientColor: selectedBarIndex === index ? '#fb923c' : '#fdba74',
+        frontColor: '#f97316',
+        gradientColor: '#fdba74',
         topLabelComponent: () =>
          (
           <Text
@@ -115,7 +116,7 @@ export default function MinimalChart() {
             style={{ width: 30, height: 30, marginLeft: 10 }}
           />)
       }))
-  }, [opinions, selectedBarIndex]);
+  }, [opinions]);
 
 
   return (
@@ -187,6 +188,7 @@ export default function MinimalChart() {
           }}
         >
           <BarChart
+            key={chartKey}
             noOfSections={4}
             barBorderRadius={4}
             data={transformedData}
@@ -210,9 +212,6 @@ export default function MinimalChart() {
             showGradient
             dashGap={10}
             xAxisTextNumberOfLines={2}
-            onPress={(_item: BarData, index: number) => {
-              setSelectedBarIndex(selectedBarIndex === index ? null : index);
-            }}
           />
         </View>
       </ScrollView>

@@ -1,13 +1,13 @@
-import { generateMonthlyData } from "@/constants/DummyData";
 import { Color } from "@/constants/TWPalette";
-import { useCallback, useMemo, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Pressable, ScrollView, Text, View, Image } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import { Ionicons } from "@expo/vector-icons";
 import GeneralContentView from "@/components/GeneralContentView";
 import { useFocusEffect } from "expo-router";
 import { getCountAllOpinions, getOpinionsByMonth, getOpinionsByYear, Opinion } from "@/services/dataService";
 import TopReportNumbers from "@/components/TopReportNumbers";
+import { satisfactionLevel } from "@/helpers/imagestList";
 
 interface BarData {
   value: number;
@@ -17,34 +17,21 @@ interface BarData {
 }
 
 interface ItopNumbers {
-  total: number;
-  perYear: number;
-  perMonth: number;
+  total: number | undefined;
+  perYear: number | undefined;
+  perMonth: number | undefined;
 }
 
 export default function MinimalChart() {
   const [topNumbers, setTopNumbers] = useState<ItopNumbers>({ total: 0, perYear: 0, perMonth: 0 })
-  const [selectedBarIndex, setSelectedBarIndex] = useState<number | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-
-  // const [opinions, setOpinions] = useState<Opinion[] | null>(null)
-
+  const [opinions, setOpinions] = useState<Opinion[] | null>(null)
+  const [selectedBarIndex, setSelectedBarIndex] = useState<number | null>(null);
   const loadData = useCallback(() => {
-    const getOpinions = () => {
-      Promise.all([
-        getCountAllOpinions(),
-        getOpinionsByYear(new Date().getFullYear()),
-        getOpinionsByMonth(new Date().getFullYear(), new Date().getMonth())
-      ]).then((values) => {
-        console.log('values ', values)
-      })
-      /*
-      const totalOpinions = await getCountAllOpinions()
-      const perYear = await getOpinionsByYear(`${new Date().getFullYear()}`)
-      console.log('perYear ', perYear)
-      totalOpinions && setTopNumbers({ ...topNumbers, total: totalOpinions.count })
-      */
+    const getOpinions = async() => {
+      setCurrentMonth(new Date().getMonth())
+      setCurrentYear(new Date().getFullYear())
     }
     getOpinions()
   }, []);
@@ -74,9 +61,9 @@ export default function MinimalChart() {
   };
 
   const navigateMonth = (direction: number) => {
+    
     let newMonth = currentMonth + direction;
     let newYear = currentYear;
-
     if (newMonth > 11) {
       newMonth = 0;
       newYear++;
@@ -84,28 +71,33 @@ export default function MinimalChart() {
       newMonth = 11;
       newYear--;
     }
-
     setCurrentMonth(newMonth);
     setCurrentYear(newYear);
-    setSelectedBarIndex(null);
   };
 
-  const monthlyData = useMemo(
-    () => generateMonthlyData(currentYear, currentMonth + 1),
-    [currentYear, currentMonth]
-  );
+  useEffect(() => {
+    const getData = async() => {
+      const total = await getCountAllOpinions()
+      const resultPerYear = await getOpinionsByYear(currentYear)
+      const result = await getOpinionsByMonth(currentYear, currentMonth)
+      setOpinions(result)
+      setTopNumbers({
+          total: total?.count,
+          perYear: resultPerYear?.count,
+          perMonth: result?.length
+        })
+    }
+    getData()
+  }, [currentYear, currentMonth])
 
-  const getChartData = useCallback(() => {
-    return monthlyData.map((item, index) => ({
-      ...item,
-      frontColor:
-        selectedBarIndex === index
-          ? '#ea580c'
-          : '#f97316',
-      gradientColor:
-        selectedBarIndex === index ? '#fb923c' : '#fdba74',
-      topLabelComponent: () =>
-        selectedBarIndex === index ? (
+  const transformedData = useMemo(() => {
+    if (!opinions) return [];
+    return satisfactionLevel.map((item, index) => ({
+        value: opinions?.filter(option => option.satisfaction === item.id).length,
+        frontColor: selectedBarIndex === index ? '#ea580c' : '#f97316',
+        gradientColor: selectedBarIndex === index ? '#fb923c' : '#fdba74',
+        topLabelComponent: () =>
+         (
           <Text
             style={{
               color: '#c2410c',
@@ -114,11 +106,17 @@ export default function MinimalChart() {
               marginBottom: 4,
             }}
           >
-            {item.value}
+            {opinions?.filter(option => option.satisfaction === item.id).length}
           </Text>
-        ) : null,
-    }));
-  }, [monthlyData, selectedBarIndex]);
+        ),
+        labelComponent: () =>
+          (<Image
+            source={item.src}
+            style={{ width: 30, height: 30, marginLeft: 10 }}
+          />)
+      }))
+  }, [opinions, selectedBarIndex]);
+
 
   return (
     <GeneralContentView>
@@ -191,7 +189,7 @@ export default function MinimalChart() {
           <BarChart
             noOfSections={4}
             barBorderRadius={4}
-            data={getChartData()}
+            data={transformedData}
             yAxisThickness={0}
             xAxisThickness={0}
             // hideYAxisText
@@ -207,12 +205,14 @@ export default function MinimalChart() {
             }}
             showXAxisIndices={false}
             isAnimated
+            //isThreeD
             animationDuration={300}
+            showGradient
+            dashGap={10}
+            xAxisTextNumberOfLines={2}
             onPress={(_item: BarData, index: number) => {
               setSelectedBarIndex(selectedBarIndex === index ? null : index);
             }}
-            showGradient
-            dashGap={10}
           />
         </View>
       </ScrollView>

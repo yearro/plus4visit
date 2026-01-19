@@ -2,9 +2,9 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
 interface iProps {
-  total: number;
-  perYear: number;
-  perMonth: number;
+  total: number | undefined;
+  perYear: number | undefined;
+  perMonth: number | undefined;
 }
 
 const ReportCard = (label = '', value = 0) => (

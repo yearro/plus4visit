@@ -41,7 +41,7 @@ export const getOpinionsByMonth = async(year:number, month: number):Promise<Opin
   return await db.getAllAsync("SELECT * FROM opinions WHERE strftime('%Y-%m', requested_date) = ?", [date])
 }
 
-export const getOpinionsByYear = async(year:number):Promise<Opinion[] | null> => {
+export const getOpinionsByYear = async(year:number):Promise<Count | null> => {
   const db = await getAppDB()
   return await db.getFirstSync(
     "SELECT COUNT(*) as count FROM opinions WHERE strftime('%Y', requested_date) = ?", [`${year}`])

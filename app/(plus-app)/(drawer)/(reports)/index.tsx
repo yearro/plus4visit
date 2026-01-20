@@ -179,8 +179,6 @@ export default function MinimalChart() {
             />
           </Pressable>
         </View>
-
-        {/* Chart Container */}
         <View
           style={{
             marginBottom: 32,

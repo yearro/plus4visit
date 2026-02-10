@@ -28,18 +28,16 @@ export default function MinimalChart() {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [opinions, setOpinions] = useState<Opinion[] | null>(null);
-  const loadData = useCallback(() => {
-    const getOpinions = async() => {
-      setCurrentMonth(new Date().getMonth())
-      setCurrentYear(new Date().getFullYear())
-    }
-    getOpinions()
-  }, []);
-  
+
   useFocusEffect(
     useCallback(() => {
-      loadData();
-    }, [loadData])
+      setCurrentMonth(new Date().getMonth())
+      setCurrentYear(new Date().getFullYear())
+      return () => {
+        setCurrentMonth(1)
+        setCurrentYear(1)
+      }
+    }, [])
   );
 
   const getMonthName = (month: number) => {

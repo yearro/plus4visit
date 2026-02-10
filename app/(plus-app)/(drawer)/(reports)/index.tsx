@@ -1,4 +1,3 @@
-import { Color } from "@/constants/TWPalette";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, Text, View, Image } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
@@ -8,13 +7,6 @@ import { useFocusEffect } from "expo-router";
 import { getCountAllOpinions, getOpinionsByMonth, getOpinionsByYear, Opinion } from "@/services/dataService";
 import TopReportNumbers from "@/components/TopReportNumbers";
 import { satisfactionLevel } from "@/helpers/imagestList";
-
-interface BarData {
-  value: number;
-  label?: string;
-  frontColor?: string;
-  [key: string]: any;
-}
 
 interface ItopNumbers {
   total: number | undefined;
@@ -148,15 +140,14 @@ export default function MinimalChart() {
             <Ionicons
               name="chevron-back-outline"
               size={20}
-              color={Color.gray[500]}
+              color={'#6b7280'}
             />
           </Pressable>
-
           <Text
             style={{
               fontSize: 18,
               fontWeight: "600",
-              color: Color.gray[900],
+              color: '#111827',
             }}
           >
             {getMonthName(currentMonth)} {currentYear}
@@ -173,7 +164,7 @@ export default function MinimalChart() {
             <Ionicons
               name="chevron-forward-outline"
               size={20}
-              color={Color.gray[500]}
+              color={'#6b7280'}
             />
           </Pressable>
         </View>
@@ -192,12 +183,12 @@ export default function MinimalChart() {
             xAxisThickness={0}
             // hideYAxisText
             xAxisLabelTextStyle={{
-              color: Color.gray[400],
+              color: '#9ca3af',
               fontSize: 12,
               fontWeight: "500",
             }}
             yAxisTextStyle={{
-              color: Color.gray[400],
+              color: '#9ca3af',
               fontSize: 12,
               fontWeight: "500",
             }}

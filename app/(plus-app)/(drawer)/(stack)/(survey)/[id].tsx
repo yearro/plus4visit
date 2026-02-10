@@ -21,7 +21,7 @@ const GameScreen = () => {
 
   const segments:tSegment[] = []
   awards.map(item => segments.push({ text: item.name }))
-  const segmentColors = colorCodes.splice(0, awards.length)
+  const segmentColors = colorCodes.slice(0, awards.length)
 
   const onFinished = (segment: any) => {
     setResult(segment);

@@ -16,19 +16,15 @@ const AccessNavigation = () => {
       <Tabs.Screen
         name='(tabs)/login'
         options={{
-          title: 'Signed-in User',
-          headerShown: true,
           tabBarIcon: ({ color }) => <Ionicons size={28} name='log-in-outline' color={color} />,
-          header: () => <CustomHeaderTab />
+          header: () => <CustomHeaderTab title='Signed-in User' icon='enter-sharp' />
         }}
       />
       <Tabs.Screen
         name='(tabs)/registerUser'
         options={{
-          title: 'New User',
-          headerShown: true,
           tabBarIcon: ({ color }) => <Ionicons size={28} name='person-add-outline' color={color} />,
-          header: () => <CustomHeaderTab />
+          header: () => <CustomHeaderTab title='New User' icon='person-add-sharp' />
         }}
       />
     </Tabs>

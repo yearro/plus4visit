@@ -17,6 +17,14 @@ export async function createAppTables() {
       opinion TEXT,
       requested_date DATE DEFAULT current_date
     );
+
+    CREATE TABLE IF NOT EXISTS localusers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT NOT NULL,
+      name TEXT NOT NULL,
+      password TEXT NOT NULL
+    );
+    CREATE UNIQUE INDEX IF NOT EXISTS localuser_email ON localusers(email);
   `)
   return true
 }

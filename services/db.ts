@@ -8,3 +8,10 @@ export async function getAppDB() {
   }
   return db
 }
+
+export async function closeDB() {
+  if(db) {
+    await db.closeAsync()
+    db = null
+  }
+}

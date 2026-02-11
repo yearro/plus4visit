@@ -16,6 +16,7 @@ const AccessNavigation = () => {
       <Tabs.Screen
         name='(tabs)/login'
         options={{
+          title: 'Signed-in User',
           tabBarIcon: ({ color }) => <Ionicons size={28} name='log-in-outline' color={color} />,
           header: () => <CustomHeaderTab title='Signed-in User' icon='enter-sharp' />
         }}
@@ -23,6 +24,7 @@ const AccessNavigation = () => {
       <Tabs.Screen
         name='(tabs)/registerUser'
         options={{
+          title: 'New User',
           tabBarIcon: ({ color }) => <Ionicons size={28} name='person-add-outline' color={color} />,
           header: () => <CustomHeaderTab title='New User' icon='person-add-sharp' />
         }}

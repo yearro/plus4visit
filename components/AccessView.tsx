@@ -1,13 +1,15 @@
-import { useThemeColor } from '@/hooks/use-theme-color'
+import { KeyboardAvoidingView, View, StyleSheet, Text } from 'react-native'
+import React from 'react'
+import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
-import React  from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native'
-import LoginForm from '@/components/LoginForm'
-import { LinearGradient } from 'expo-linear-gradient';
+import { useThemeColor } from '@/hooks/use-theme-color'
 
-const RegisterUserScreen = () => {
+type iProps = {
+  children: React.ReactNode
+}
+
+const AccessView = ({ children }: iProps) => {
   const primary = useThemeColor({}, 'primary')
-
   return (
     <KeyboardAvoidingView
       behavior='padding'
@@ -22,14 +24,14 @@ const RegisterUserScreen = () => {
             name='person-circle-outline'
           />
           <Text style={styles.projectTitle}>Plus4Visit</Text>
-          <LoginForm />
+          { children }
         </View>
       </LinearGradient>
     </KeyboardAvoidingView>
   )
 }
 
-export default RegisterUserScreen
+export default AccessView
 
 const styles = StyleSheet.create({
   container: {

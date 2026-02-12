@@ -1,12 +1,13 @@
 
 import { View, Text } from 'react-native'
 import React from 'react'
+import AccessView from '@/components/AccessView'
 
 const LoginScreen = () => {
   return (
-    <View>
-      <Text>LoginScreen</Text>
-    </View>
+    <AccessView>
+      <Text>Hola</Text>
+    </AccessView>
   )
 }
 

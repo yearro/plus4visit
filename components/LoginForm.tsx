@@ -2,12 +2,16 @@ import React from 'react'
 import { Formik } from 'formik'
 import ThemedTextInput from './ThemedTextInput'
 import ThemedButton from './ThemedButton'
-import { loginValidationSchema } from '@/presentation/auth/SchemaValidationLogin'
+import { addNewUserSchema } from '@/presentation/auth/SchemaValidationLogin'
 import { useAuthStore } from '@/presentation/auth/useAuthStore'
 import { router } from 'expo-router'
 import ErrorMessage from './ErrorMessage'
 
-const LoginForm = () => {
+interface iProps {
+  isNewUser?: boolean
+}
+
+const LoginForm = ({ isNewUser }:iProps) => {
   const { login } = useAuthStore()
 
   const onSubmitParams = async({ email = '', pass = '', name = ''}) => {
@@ -20,7 +24,7 @@ const LoginForm = () => {
   return (
     <Formik
       initialValues={{ email: 'nada@nada.com', pass: 'Abc1234', name: 'Yeri Armenta' }}
-      validationSchema={ loginValidationSchema }
+      validationSchema={ addNewUserSchema }
       onSubmit={onSubmitParams}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (

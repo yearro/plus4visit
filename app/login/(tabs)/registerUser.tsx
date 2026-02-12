@@ -5,7 +5,7 @@ import AccessView from '@/components/AccessView'
 const RegisterUserScreen = () => {
   return (
     <AccessView>
-      <LoginForm />
+      <LoginForm isNewUser />
     </AccessView>
   )
 }

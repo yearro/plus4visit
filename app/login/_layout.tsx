@@ -5,12 +5,15 @@ import { useThemeColor } from '@/hooks/use-theme-color'
 import CustomHeaderTab from '@/components/CustomHeaderTab'
 
 const AccessNavigation = () => {
-  const primary = useThemeColor({}, 'primary')
-  const secondary = useThemeColor({}, 'tertiary')
+  const tertiary = useThemeColor({}, 'tertiary')
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: primary,
+        tabBarActiveTintColor: '#fff',
+        tabBarStyle: {
+          backgroundColor: tertiary
+        },
+        tabBarActiveBackgroundColor: '#D1D1B6'
       }}
     >
       <Tabs.Screen

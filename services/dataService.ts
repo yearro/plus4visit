@@ -1,4 +1,5 @@
 import { getAppDB } from '@/services/db'
+import base64 from 'react-native-base64'
 
 export type Client = {
   id: number;
@@ -16,6 +17,13 @@ export type Opinion = {
 
 export type Count = {
   count: number
+}
+
+export type LocalUser = {
+  id: number;
+  email: string;
+  name: string;
+  password: string;
 }
 
 export const addOpinion = async(user_id:number, satisfaction:number, opinion:string) => {
@@ -75,4 +83,14 @@ export const addClient = async(clientEmail:string) => {
 export const updateClientVisits = async(email:string, visits:number) => {
   const db = await getAppDB()
   return await db.runAsync('UPDATE clients SET visits = ? WHERE email = ?', [visits, email]);
+}
+
+export const addNewUser = async(email:string, name:string, pass:string) => {
+  const db = await getAppDB()
+  await db.runAsync('INSERT INTO localusers (email, name, password) VALUES (?,?,?)', email, name, base64.encode(pass));
+}
+
+export const getLocalUser = async(email:string, pass:string):Promise<LocalUser | null> => {
+  const db = await getAppDB()
+  return await db.getFirstAsync(`SELECT * FROM localusers WHERE email = ? AND password = ?`, [email, base64.encode(pass)])
 }

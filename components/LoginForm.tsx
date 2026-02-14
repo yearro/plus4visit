@@ -2,41 +2,53 @@ import React from 'react'
 import { Formik } from 'formik'
 import ThemedTextInput from './ThemedTextInput'
 import ThemedButton from './ThemedButton'
-import { addNewUserSchema } from '@/presentation/auth/SchemaValidationLogin'
+import { addNewUserSchema, baseLoginSchema } from '@/presentation/auth/SchemaValidationLogin'
 import { useAuthStore } from '@/presentation/auth/useAuthStore'
 import { router } from 'expo-router'
 import ErrorMessage from './ErrorMessage'
+import { Alert } from 'react-native'
 
 interface iProps {
   isNewUser?: boolean
 }
 
-const LoginForm = ({ isNewUser }:iProps) => {
-  const { login } = useAuthStore()
-
+const LoginForm = ({ isNewUser = false }:iProps) => {
+  const { login, error } = useAuthStore()
+  const buttonTitle = isNewUser ? 'Create User' : 'Signed in'
   const onSubmitParams = async({ email = '', pass = '', name = ''}) => {
-    const state = await login(email, pass, name)
+    const state = await login(email, pass, name, isNewUser)
+    if(!state) {
+      Alert.alert(
+        isNewUser ? 'Sign Up Failed' : 'Authentication Failed',
+        'Verify the information',);
+    }
     if(state) {
       router.replace('/(plus-app)/(drawer)/(users)')
+      return
     }
   }
   
   return (
     <Formik
-      initialValues={{ email: 'nada@nada.com', pass: 'Abc1234', name: 'Yeri Armenta' }}
-      validationSchema={ addNewUserSchema }
+      initialValues={{ email: 'nada@nada.com', pass: 'Abc1234+', name: 'Yeri Armenta' }}
+      validationSchema={ isNewUser ? addNewUserSchema : baseLoginSchema }
       onSubmit={onSubmitParams}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <>
-          <ThemedTextInput
-            icon='person-outline'
-            typeInput='Secondary'
-            placeholder='Write your name'
-            value={values.name}
-            onChangeText={handleChange('name')}
-          />
-          { errors.name && touched.name &&  <ErrorMessage error={errors.name} /> }
+          { isNewUser && (
+            <>
+              <ThemedTextInput
+                icon='person-outline'
+                typeInput='Secondary'
+                placeholder='Write your name'
+                value={values.name}
+                onChangeText={handleChange('name')}
+              />
+              { errors.name && touched.name &&  <ErrorMessage error={errors.name} /> }
+            </>
+          )}
+
           <ThemedTextInput
             icon='mail-outline'
             typeInput='Secondary'
@@ -58,7 +70,7 @@ const LoginForm = ({ isNewUser }:iProps) => {
             onPress={() => handleSubmit()}
             icon='log-in-outline'
             typeButton='Secondary'
-          >Create User</ThemedButton>
+          >{buttonTitle}</ThemedButton>
         </>
       )}
     </Formik>

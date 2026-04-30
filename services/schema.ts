@@ -5,10 +5,9 @@ export async function createAppTables() {
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS clients (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      email TEXT NOT NULL,
+      name TEXT NOT NULL,
       visits INTEGER DEFAULT 1
     );
-    CREATE UNIQUE INDEX IF NOT EXISTS client_email ON clients(email);
   
     CREATE TABLE IF NOT EXISTS opinions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,

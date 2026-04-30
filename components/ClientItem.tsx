@@ -4,17 +4,17 @@ import { Ionicons } from '@expo/vector-icons';
 
 interface iProps {
   id: number;
-  email: string;
+  name: string;
   visits: number;
-  onPress: (arg:number) => void,
-  onRedirect: (arg:number) => void,
+  onPress: (arg: number) => void,
+  onRedirect: (arg: number) => void,
 }
 
-const ClientItem = ({id, email, visits, onPress, onRedirect}:iProps) => {
+const ClientItem = ({ id, name, visits, onPress, onRedirect }: iProps) => {
   return (
     <View style={styles.clientContainer}>
       <View style={{ flex: 1 }}>
-        <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>{email}</Text>
+        <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>{name}</Text>
         <Text style={styles.visits}>{visits} visits</Text>
       </View>
       <View style={styles.buttonContainer}>
@@ -39,7 +39,6 @@ const ClientItem = ({id, email, visits, onPress, onRedirect}:iProps) => {
           />
         </TouchableOpacity>
       </View>
-      
     </View>
   )
 }
@@ -55,10 +54,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginVertical: 10,
     paddingBottom: 10,
-    },
+  },
   text: {
     fontSize: 18,
-    fontFamily: 'MontserratBold'},
+    fontFamily: 'MontserratBold'
+  },
   buttonContainer: {
     flexDirection: 'row',
     marginLeft: 10,

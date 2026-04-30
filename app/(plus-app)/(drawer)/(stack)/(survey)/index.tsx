@@ -2,7 +2,7 @@ import { View, Text, KeyboardAvoidingView, ScrollView, StyleSheet, Alert, Image,
 import React, { useState } from 'react'
 import ExperienceMeter from '@/components/ExperienceMeter'
 import { useThemeColor } from '@/hooks/use-theme-color'
-import EmailExperienceMeter from '@/components/EmailExperienceMeter'
+import NameExperienceMeter from '@/components/NameExperienceMeter'
 import ThemedTextInput from '@/components/ThemedTextInput'
 import ThemedButton from '@/components/ThemedButton'
 import { getClient, addClient, addOpinion, updateClientVisits, Client } from '@/services/dataService'
@@ -15,7 +15,7 @@ const SurveyScreen = () => {
   const secondary = useThemeColor({}, 'secondary')
   const [surveyStep, setSurveyStep] = useState(0)
   const [experience, setExperience] = useState(0)
-  const [email, setEmail] = useState('cliente@plus4visit.com')
+  const [name, setName] = useState('Yeri Armenta')
   const [opinion, setOpinion] = useState('')
 
   const cleanData = () => {
@@ -26,25 +26,25 @@ const SurveyScreen = () => {
     setExperience(0)
   }
 
-  const successEmail = (email:string) => {
-    setEmail(email)
+  const successName = (name: string) => {
+    setName(name)
     setSurveyStep((prev) => prev + 1)
   }
 
-  const selectExperience = (id:number) => {
+  const selectExperience = (id: number) => {
     setExperience(id)
     setSurveyStep((prev) => prev + 1)
   }
 
-  const getClientId = async(email:string):Promise<Client | null> => {
+  const getClientId = async (name: string): Promise<Client | null> => {
     try {
-      const client = await getClient(email)
-      if(client)
+      const client = await getClient(name)
+      if (client)
         return client
-      const newClient = await addClient(email)
+      const newClient = await addClient(name)
       return {
         id: newClient.lastInsertRowId,
-        email,
+        name,
         visits: 0
       }
     } catch (error) {
@@ -53,16 +53,16 @@ const SurveyScreen = () => {
     }
   }
 
-  const sendSurvey = async() => {
+  const sendSurvey = async () => {
     try {
-      const client = await getClientId(email)
-      if(client) {
+      const client = await getClientId(name)
+      if (client) {
         await addOpinion(client.id, experience, opinion)
         const newVisits = client.visits + 1
-        await updateClientVisits(client.email, newVisits)
-        if(newVisits % parseInt(visitNumber) === 0) {
+        await updateClientVisits(client.id, newVisits)
+        if (newVisits % parseInt(visitNumber) === 0) {
           cleanData()
-          router.push(`./${client.email}`)
+          router.push(`./${client.id}`)
           return
         }
       }
@@ -80,14 +80,14 @@ const SurveyScreen = () => {
         <ScrollView style={{ paddingHorizontal: 20 }}>
           <View>
             <View style={styles.header}>
-              <Text style={[styles.headerTitle, { color: secondary}]}>Step {surveyStep + 1 }</Text>
+              <Text style={[styles.headerTitle, { color: secondary }]}>Step {surveyStep + 1}</Text>
             </View>
-            { surveyStep === 0 && (
-             <EmailExperienceMeter
-                email={email}
-                onSuccess={successEmail}
-             />)
-            }{ surveyStep === 1 && (
+            {surveyStep === 0 && (
+              <NameExperienceMeter
+                name={name}
+                onSuccess={successName}
+              />)
+            }{surveyStep === 1 && (
               <ExperienceMeter
                 onPress={selectExperience}
               />)
@@ -105,7 +105,7 @@ const SurveyScreen = () => {
                   <ThemedButton
                     onPress={() => sendSurvey()}
                     typeButton='Secondary'
-                    >Send survey</ThemedButton>
+                  >Send survey</ThemedButton>
                 </>
               )
             }{
@@ -122,7 +122,7 @@ const SurveyScreen = () => {
                   <ThemedButton
                     onPress={() => cleanData()}
                     typeButton='Secondary'
-                    >New survey</ThemedButton>
+                  >New survey</ThemedButton>
                 </View>)
             }
           </View>

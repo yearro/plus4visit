@@ -20,17 +20,17 @@ const UsersScreen = () => {
     }, [loadData])
   );
 
-  const onPullToRefresh = async() => {
+  const onPullToRefresh = async () => {
     setIsRefreshing(true)
     const result = await getAllClients()
     setClients(result)
     setIsRefreshing(false)
   }
 
-  const deleteClient = (id:number) => {
+  const deleteClient = (id: number) => {
     console.log('delete ', id)
   }
-  const checkVisits = (id:number) => {
+  const checkVisits = (id: number) => {
     router.push(`./${id}`)
   }
 
@@ -44,12 +44,12 @@ const UsersScreen = () => {
         }
         <FlatList
           data={clients}
-          keyExtractor={(item) => item.email}
+          keyExtractor={(item) => item.name}
           renderItem={({ item }) => (
             <ClientItem
-              key={item.email}
+              key={item.name}
               id={item.id}
-              email={item.email}
+              name={item.name}
               visits={item.visits}
               onPress={deleteClient}
               onRedirect={checkVisits}
@@ -72,13 +72,16 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     marginHorizontal: 15,
     borderRadius: 10,
-    paddingHorizontal: 10},
+    paddingHorizontal: 10
+  },
   headerContainer: {
     padding: 10,
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
-    alignItems: 'center'},
+    alignItems: 'center'
+  },
   headerText: {
     fontFamily: 'MontserratBold',
-    fontSize: 20},
+    fontSize: 20
+  },
 })

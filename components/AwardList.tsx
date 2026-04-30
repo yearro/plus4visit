@@ -10,7 +10,7 @@ interface iProps {
   setAwards: Dispatch<SetStateAction<Award[]>>
 }
 
-const AwardList = ({ awards, setAwards }:iProps) => {
+const AwardList = ({ awards, setAwards }: iProps) => {
   const [totalAwards, setTotalAwards] = useState(0)
 
   useEffect(() => {
@@ -18,12 +18,12 @@ const AwardList = ({ awards, setAwards }:iProps) => {
   }, [awards.length])
 
   const addNewAward = () => {
-    if(totalAwards < MAX_NUMBER_AWARDS ) {
-      setAwards([...awards, { ind: totalAwards, name: '' } ])
+    if (totalAwards < MAX_NUMBER_AWARDS) {
+      setAwards([...awards, { ind: totalAwards, name: '' }])
     }
   }
 
-  const updateValue = (ind:number, value:string) => {
+  const updateValue = (ind: number, value: string) => {
     const result = awards.filter((item) => item.ind !== ind)
     setAwards([...result, { ind: ind, name: value }].sort((a, b) => a.ind - b.ind))
   }
@@ -31,7 +31,7 @@ const AwardList = ({ awards, setAwards }:iProps) => {
   const removeAward = (ind: number) => {
     const result = awards.filter((item) => item.ind !== ind)
     if (result.length > 0) {
-      for(let i = 0; i < result.length; i++) {
+      for (let i = 0; i < result.length; i++) {
         result[i] = { ind: i, name: result[i].name }
       }
     }
@@ -41,26 +41,28 @@ const AwardList = ({ awards, setAwards }:iProps) => {
   return (
     <>
       <View style={styles.headerSection}>
-        <Text style={ styles.title }>Awards : { totalAwards }</Text>
+        <Text style={styles.title}>Awards</Text>
+        <Text
+          style={styles.description}
+        >You can define a maximum of {MAX_NUMBER_AWARDS} different prizes.</Text>
         <ThemedButton
           disabled={awards.length == MAX_NUMBER_AWARDS}
           onPress={() => addNewAward()}
           icon='add-circle-outline'
         >New Award</ThemedButton>
       </View>
-      <Text
-        style={styles.description}
-      >You can define a maximum of {MAX_NUMBER_AWARDS} different prizes.</Text>
+
+
       <View>
-        { awards.map((award) => (
-            <AwardItem
-              key={award.ind}
-              ind={award.ind}
-              name={award.name}
-              remove={removeAward}
-              onChangeText={updateValue}
-            />
-        )) }
+        {awards.map((award) => (
+          <AwardItem
+            key={award.ind}
+            ind={award.ind}
+            name={award.name}
+            remove={removeAward}
+            onChangeText={updateValue}
+          />
+        ))}
       </View>
     </>
   )
@@ -74,9 +76,11 @@ const styles = StyleSheet.create({
     fontFamily: 'MontserratBold'
   },
   headerSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginVertical: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 10
   },
   description: {
     fontSize: 16,

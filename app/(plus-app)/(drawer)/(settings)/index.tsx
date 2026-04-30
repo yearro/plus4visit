@@ -15,16 +15,16 @@ const SettingsScreen = () => {
   const insets = useSafeAreaInsets()
   const colorBorder = useThemeColor({}, 'secondary')
 
-  const handleNumericChange = (text:string) => {
+  const handleNumericChange = (text: string) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     setVisits(numericValue);
   };
 
-  const saveChanges = async() => {
-    if(visits == '' )
+  const saveChanges = async () => {
+    if (visits == '')
       setVisits('0')
     const result = await updateSettings(visits, awardList)
-    if(result)
+    if (result)
       Alert.alert('Configuration changes', 'The changes were saved');
   }
 
@@ -33,36 +33,31 @@ const SettingsScreen = () => {
       style={{ flex: 1, marginBottom: insets.bottom }}
     >
       <GeneralContentView>
-          <ScrollView style={{ paddingHorizontal: 20}}>
-            <View style={styles.headerSection}>
-              <Text style={ styles.title }>Number of visits</Text>
-              <View style={{ width: 200 }}>
-                <ThemedTextInput
-                  keyboardType='numeric'
-                  icon='ribbon-outline'
-                  value={visits.toString()}
-                  onChangeText={handleNumericChange}
-                />
-              </View>
-            </View>
-            <Text
-              style={styles.description}
-            >After this number of visits the client will have the opportunity to participate in a game.</Text>
-            <View  style={[styles.section, { borderColor: colorBorder }]} />
-            <View>
-              <AwardList
-                awards={awardList}
-                setAwards={setAwardList}
-              />
-            </View>
-            <View>
-              <ThemedButton
-                onPress={() => saveChanges()}
-                icon='save-outline'
-                typeButton='Secondary'
-              >Save changes</ThemedButton>
-            </View>
-          </ScrollView>
+        <ScrollView style={{ paddingHorizontal: 20 }}>
+          <View style={styles.settingSection}>
+            <Text style={styles.title}>Number of visits</Text>
+            <Text style={styles.description}>After this number of visits the client will have the opportunity to participate in a game.</Text>
+            <ThemedTextInput
+              keyboardType='numeric'
+              icon='ribbon-outline'
+              value={visits.toString()}
+              onChangeText={handleNumericChange}
+            />
+          </View>
+          <View>
+            <AwardList
+              awards={awardList}
+              setAwards={setAwardList}
+            />
+          </View>
+          <View>
+            <ThemedButton
+              onPress={() => saveChanges()}
+              icon='save-outline'
+              typeButton='Secondary'
+            >Save changes</ThemedButton>
+          </View>
+        </ScrollView>
       </GeneralContentView>
     </KeyboardAvoidingView>
   )
@@ -77,15 +72,14 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    fontFamily: 'MontserratLight'
+    fontFamily: 'MontserratLight',
+    marginTop: 15
   },
-  section: {
-    borderTopWidth: 1,
-    marginVertical: 20
+  settingSection: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginVertical: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 10
   },
-  headerSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }
 })

@@ -57,9 +57,10 @@ export const getOpinionsByYear = async (year: number): Promise<Count | null> => 
 
 export const getClient = async (clientName: string): Promise<Client | null> => {
   const db = await getAppDB()
+  const cleanName = clientName.replace(/\s+/g, ' ').trim().toLowerCase()
   return await db.getFirstAsync(
     `SELECT * FROM clients WHERE name LIKE ?`,
-    [`%${clientName}%`])
+    [`%${cleanName}%`])
 }
 
 export const getUserOpinions = async (clientId: number): Promise<Opinion[] | null> => {
@@ -76,8 +77,9 @@ export const getAllClients = async (): Promise<Client[] | null> => {
 
 export const addClient = async (clientName: string) => {
   const db = await getAppDB()
+  const cleanName = clientName.replace(/\s+/g, ' ').trim().toLowerCase()
   return await db.runAsync(
-    `INSERT INTO clients (name) VALUES (?)`, clientName)
+    `INSERT INTO clients (name) VALUES (?)`, cleanName)
 }
 
 export const updateClientVisits = async (id: number, visits: number) => {

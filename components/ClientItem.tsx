@@ -8,36 +8,35 @@ interface iProps {
   visits: number;
   onPress: (arg: number) => void,
   onRedirect: (arg: number) => void,
+  deleteView?: boolean;
 }
 
-const ClientItem = ({ id, name, visits, onPress, onRedirect }: iProps) => {
+const ClientItem = ({ id, name, visits, onPress, onRedirect, deleteView = false }: iProps) => {
   return (
-    <View style={styles.clientContainer}>
-      <View style={{ flex: 1 }}>
+    <View style={styles.itemContainer}>
+      <TouchableOpacity
+        onPress={() => onRedirect(id)}
+        style={styles.itemInformation}
+      >
         <Text numberOfLines={1} ellipsizeMode="middle" style={styles.text}>{name}</Text>
-        <Text style={styles.visits}>{visits} visits</Text>
-      </View>
+        <View style={styles.visitsContainer}>
+          <Text style={styles.totalVisits}>{visits}</Text>
+          <Text style={styles.visits}>visits</Text>
+        </View>
+      </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => onPress(id)}
-          style={styles.button}
-        >
-          <Ionicons
-            name='trash-outline'
-            size={30}
-            color={'red'}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => onRedirect(id)}
-          style={styles.button}
-        >
-          <Ionicons
-            name='chevron-forward-outline'
-            size={30}
-            color={'black'}
-          />
-        </TouchableOpacity>
+        {deleteView && (
+          <TouchableOpacity
+            onPress={() => onPress(id)}
+            style={styles.button}
+          >
+            <Ionicons
+              name='trash-outline'
+              size={30}
+              color={'red'}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )
@@ -46,18 +45,32 @@ const ClientItem = ({ id, name, visits, onPress, onRedirect }: iProps) => {
 export default ClientItem
 
 const styles = StyleSheet.create({
-  clientContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+  itemContainer: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 10,
-    marginVertical: 10,
-    paddingBottom: 10,
+    justifyContent: 'space-between',
+    marginHorizontal: 15,
+    marginVertical: 7,
+  },
+  itemInformation: {
+    backgroundColor: 'white',
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   text: {
     fontSize: 18,
-    fontFamily: 'MontserratBold'
+    fontFamily: 'MontserratBold',
+    marginLeft: 10,
+    textTransform: 'capitalize',
+
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -69,8 +82,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  visitsContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   visits: {
     fontSize: 18,
     fontFamily: 'MontserratLight'
+  },
+  totalVisits: {
+    fontSize: 24,
+    fontFamily: 'MontserratBold'
   }
 })

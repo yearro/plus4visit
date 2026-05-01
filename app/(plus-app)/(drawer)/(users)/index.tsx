@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, RefreshControl, Text } from 'react-native'
+import { FlatList, StyleSheet, RefreshControl, Text, View, TextInput } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
@@ -9,6 +9,7 @@ import GeneralContentView from '@/components/GeneralContentView'
 const UsersScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [clients, setClients] = useState<Client[] | null>(null)
+  const [deleteView, setDeleteView] = useState(false)
 
   const loadData = useCallback(() => {
     onPullToRefresh()
@@ -36,12 +37,17 @@ const UsersScreen = () => {
 
   return (
     <GeneralContentView>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView >
         {
-          clients?.length === 0 && (
+          clients?.length === 0 && (<View style={styles.container}>
             <Text style={styles.headerText}>You do not have any registered clients.</Text>
-          )
+          </View>)
         }
+        <View>
+          <TextInput
+            placeholder='Search client'
+          />
+        </View>
         <FlatList
           data={clients}
           keyExtractor={(item) => item.name}
@@ -53,6 +59,7 @@ const UsersScreen = () => {
               visits={item.visits}
               onPress={deleteClient}
               onRedirect={checkVisits}
+              deleteView={deleteView}
             />
           )}
           refreshControl={

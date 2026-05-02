@@ -24,20 +24,18 @@ const ClientItem = ({ id, name, visits, onPress, onRedirect, deleteView = false 
           <Text style={styles.visits}>visits</Text>
         </View>
       </TouchableOpacity>
-      <View style={styles.buttonContainer}>
-        {deleteView && (
-          <TouchableOpacity
-            onPress={() => onPress(id)}
-            style={styles.button}
-          >
-            <Ionicons
-              name='trash-outline'
-              size={30}
-              color={'red'}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
+      {deleteView && (<View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => onPress(id)}
+          style={styles.button}
+        >
+          <Ionicons
+            name='trash-outline'
+            size={30}
+            color={'red'}
+          />
+        </TouchableOpacity>
+      </View>)}
     </View>
   )
 }

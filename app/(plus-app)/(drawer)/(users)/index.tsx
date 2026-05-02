@@ -5,11 +5,13 @@ import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, useFocusEffect } from 'expo-router'
 import GeneralContentView from '@/components/GeneralContentView'
+import SearchInput from '@/components/SearchInput'
 
 const UsersScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [clients, setClients] = useState<Client[] | null>(null)
   const [deleteView, setDeleteView] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const loadData = useCallback(() => {
     onPullToRefresh()
@@ -43,11 +45,11 @@ const UsersScreen = () => {
             <Text style={styles.headerText}>You do not have any registered clients.</Text>
           </View>)
         }
-        <View>
-          <TextInput
-            placeholder='Search client'
-          />
-        </View>
+        <SearchInput
+          placeholder='Search client'
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
         <FlatList
           data={clients}
           keyExtractor={(item) => item.name}

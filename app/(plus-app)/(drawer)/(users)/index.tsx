@@ -1,13 +1,16 @@
-import { FlatList, StyleSheet, RefreshControl, Text, View, TextInput } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import { FlatList, StyleSheet, RefreshControl, Text, View } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, useFocusEffect } from 'expo-router'
 import GeneralContentView from '@/components/GeneralContentView'
 import SearchInput from '@/components/SearchInput'
+import debounce from '@/helpers/utils'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const UsersScreen = () => {
+  const insets = useSafeAreaInsets()
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [clients, setClients] = useState<Client[] | null>(null)
   const [deleteView, setDeleteView] = useState(false)
@@ -22,6 +25,15 @@ const UsersScreen = () => {
       loadData();
     }, [loadData])
   );
+
+  useEffect(() => {
+    handleSearch(searchQuery)
+  }, [searchQuery])
+
+  const handleSearch = useCallback(debounce(async (query: string) => {
+    const result = await getAllClients(query)
+    setClients(result)
+  }, 500), [])
 
   const onPullToRefresh = async () => {
     setIsRefreshing(true)
@@ -39,7 +51,7 @@ const UsersScreen = () => {
 
   return (
     <GeneralContentView>
-      <SafeAreaView >
+      <SafeAreaView style={{ flex: 1, marginBottom: insets.bottom }}>
         {
           clients?.length === 0 && (<View style={styles.container}>
             <Text style={styles.headerText}>You do not have any registered clients.</Text>

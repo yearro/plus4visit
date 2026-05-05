@@ -70,9 +70,15 @@ export const getUserOpinions = async (clientId: number): Promise<Opinion[] | nul
     [clientId])
 }
 
-export const getAllClients = async (): Promise<Client[] | null> => {
+export const getAllClients = async (query: string = ''): Promise<Client[] | null> => {
   const db = await getAppDB()
-  return await db.getAllAsync('SELECT * FROM clients')
+  if (query === '') {
+    return await db.getAllAsync('SELECT * FROM clients')
+  }
+  const cleanName = query.replace(/\s+/g, ' ').trim().toLowerCase()
+  return await db.getAllAsync(
+    `SELECT * FROM clients WHERE name LIKE ?`,
+    [`%${cleanName}%`])
 }
 
 export const addClient = async (clientName: string) => {

@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import ThemedTextInput from '@/components/ThemedTextInput'
-import { useThemeColor } from '@/hooks/use-theme-color'
 import ThemedButton from '@/components/ThemedButton'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AwardList from '@/components/AwardList'
@@ -13,7 +12,6 @@ const SettingsScreen = () => {
   const [visits, setVisits] = useState(visitNumber)
   const [awardList, setAwardList] = useState<Award[]>(awards)
   const insets = useSafeAreaInsets()
-  const colorBorder = useThemeColor({}, 'secondary')
 
   const handleNumericChange = (text: string) => {
     const numericValue = text.replace(/[^0-9]/g, '');

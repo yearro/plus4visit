@@ -70,10 +70,11 @@ export const getUserOpinions = async (clientId: number): Promise<Opinion[] | nul
     [clientId])
 }
 
-export const getAllClients = async (query: string = ''): Promise<Client[] | null> => {
+export const getAllClients = async (query: string = '', offset: number = 0): Promise<Client[] | null> => {
   const db = await getAppDB()
+  const limit = 7
   if (query === '') {
-    return await db.getAllAsync('SELECT * FROM clients')
+    return await db.getAllAsync('SELECT * FROM clients LIMIT ? OFFSET ?', [limit, offset * limit])
   }
   const cleanName = query.replace(/\s+/g, ' ').trim().toLowerCase()
   return await db.getAllAsync(

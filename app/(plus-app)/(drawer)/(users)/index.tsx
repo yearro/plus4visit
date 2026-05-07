@@ -1,5 +1,5 @@
-import { FlatList, StyleSheet, RefreshControl, Text, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import { FlatList, StyleSheet, RefreshControl, Text, View, NativeSyntheticEvent, NativeScrollEvent, ActivityIndicator } from 'react-native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -15,6 +15,8 @@ const UsersScreen = () => {
   const [clients, setClients] = useState<Client[] | null>(null)
   const [deleteView, setDeleteView] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0)
 
   const loadData = useCallback(() => {
     onPullToRefresh()
@@ -31,22 +33,35 @@ const UsersScreen = () => {
   }, [searchQuery])
 
   const handleSearch = useCallback(debounce(async (query: string) => {
+    setIsLoading(true)
     const result = await getAllClients(query)
     setClients(result)
+    setIsLoading(false)
   }, 500), [])
 
   const onPullToRefresh = async () => {
     setIsRefreshing(true)
-    const result = await getAllClients()
+    const result = await getAllClients('', 0)
     setClients(result)
     setIsRefreshing(false)
+    setPage(0)
   }
 
   const deleteClient = (id: number) => {
     console.log('delete ', id)
   }
+
   const checkVisits = (id: number) => {
     router.push(`./${id}`)
+  }
+
+  async function handleLoadMore(info: { distanceFromEnd: number }): Promise<void> {
+    if (info.distanceFromEnd < 0) return;
+    const nextOffSet = page + 1
+    const result = await getAllClients('', nextOffSet)
+    if (!result) return
+    setClients(prevClients => prevClients === null ? result : [...prevClients, ...result])
+    setPage(nextOffSet)
   }
 
   return (
@@ -79,6 +94,8 @@ const UsersScreen = () => {
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onPullToRefresh} />
           }
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.5}
         />
       </SafeAreaView>
     </GeneralContentView>
@@ -105,4 +122,9 @@ const styles = StyleSheet.create({
     fontFamily: 'MontserratBold',
     fontSize: 20
   },
+  loader: {
+    marginVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 })

@@ -72,11 +72,13 @@ const UsersScreen = () => {
             <Text style={styles.headerText}>You do not have any registered clients.</Text>
           </View>)
         }
-        <SearchInput
-          placeholder='Search client'
-          value={searchQuery}
-          onChangeText={(text) => setSearchQuery(text)}
-        />
+        {clients && clients.length > 0 && (
+          <SearchInput
+            placeholder='Search client'
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+          />
+        )}
         <FlatList
           data={clients}
           keyExtractor={(item) => item.name}

@@ -15,7 +15,7 @@ const SurveyScreen = () => {
   const secondary = useThemeColor({}, 'secondary')
   const [surveyStep, setSurveyStep] = useState(0)
   const [experience, setExperience] = useState(0)
-  const [name, setName] = useState('Yeri Armenta')
+  const [name, setName] = useState('')
   const [opinion, setOpinion] = useState('')
 
   const cleanData = () => {

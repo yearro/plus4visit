@@ -31,7 +31,7 @@ const NameExperienceMeter = ({ name = '', onSuccess }: iProps) => {
         value={clientName}
         onChangeText={setClientName}
         typeInput='Primary'
-        placeholder='Example: Yeri Armenta'
+        placeholder='Example: John Doe'
       />
       <View style={{ alignItems: 'center' }}>
         {

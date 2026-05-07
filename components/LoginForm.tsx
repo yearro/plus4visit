@@ -12,31 +12,31 @@ interface iProps {
   isNewUser?: boolean
 }
 
-const LoginForm = ({ isNewUser = false }:iProps) => {
+const LoginForm = ({ isNewUser = false }: iProps) => {
   const { login, error } = useAuthStore()
   const buttonTitle = isNewUser ? 'Create User' : 'Signed in'
-  const onSubmitParams = async({ email = '', pass = '', name = ''}) => {
+  const onSubmitParams = async ({ email = '', pass = '', name = '' }) => {
     const state = await login(email, pass, name, isNewUser)
-    if(!state) {
+    if (!state) {
       Alert.alert(
         isNewUser ? 'Sign Up Failed' : 'Authentication Failed',
         'Verify the information',);
     }
-    if(state) {
+    if (state) {
       router.replace('/(plus-app)/(drawer)/(users)')
       return
     }
   }
-  
+
   return (
     <Formik
-      initialValues={{ email: 'nada@nada.com', pass: 'Abc1234+', name: 'Yeri Armenta' }}
-      validationSchema={ isNewUser ? addNewUserSchema : baseLoginSchema }
+      initialValues={{ email: '', pass: '', name: '' }}
+      validationSchema={isNewUser ? addNewUserSchema : baseLoginSchema}
       onSubmit={onSubmitParams}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <>
-          { isNewUser && (
+          {isNewUser && (
             <>
               <ThemedTextInput
                 icon='person-outline'
@@ -45,7 +45,7 @@ const LoginForm = ({ isNewUser = false }:iProps) => {
                 value={values.name}
                 onChangeText={handleChange('name')}
               />
-              { errors.name && touched.name &&  <ErrorMessage error={errors.name} /> }
+              {errors.name && touched.name && <ErrorMessage error={errors.name} />}
             </>
           )}
 
@@ -56,7 +56,7 @@ const LoginForm = ({ isNewUser = false }:iProps) => {
             value={values.email}
             onChangeText={handleChange('email')}
           />
-          { errors.email && touched.email &&  <ErrorMessage error={errors.email} /> }
+          {errors.email && touched.email && <ErrorMessage error={errors.email} />}
           <ThemedTextInput
             icon='lock-closed-outline'
             typeInput='Secondary'
@@ -64,8 +64,8 @@ const LoginForm = ({ isNewUser = false }:iProps) => {
             value={values.pass}
             onChangeText={handleChange('pass')}
           />
-          { errors.pass && touched.pass && <ErrorMessage error={errors.pass} /> }
-          
+          {errors.pass && touched.pass && <ErrorMessage error={errors.pass} />}
+
           <ThemedButton
             onPress={() => handleSubmit()}
             icon='log-in-outline'

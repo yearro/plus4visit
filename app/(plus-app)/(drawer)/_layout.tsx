@@ -5,8 +5,9 @@ import { Drawer } from 'expo-router/drawer';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useAuthStore } from '@/presentation/auth/useAuthStore'
 import { router } from 'expo-router';
+
 export default function Layout() {
-  const { logOut } = useAuthStore()
+  const { logOut, user } = useAuthStore()
   const drawerActiveColor = useThemeColor({}, 'secondary')
   const textColor = useThemeColor({}, 'primary')
   const logOutApp = () => {
@@ -30,12 +31,13 @@ export default function Layout() {
                 style={styles.logo}
               />
               <Text style={[styles.text, { color: textColor }]}>Plus4Visit</Text>
+              <Text style={styles.nameUser}>User: {user?.name}</Text>
             </View>
             <DrawerItemList {...props} />
             <DrawerItem
               label={'Sing out'}
               onPress={() => logOutApp()}
-              icon={({ color, size}) => (
+              icon={({ color, size }) => (
                 <Ionicons name='log-out-outline' size={size} color={color} />
               )}
             />
@@ -91,10 +93,10 @@ const styles = StyleSheet.create({
   drawerHeader: {
     paddingTop: 20,
     width: '100%',
-    height: 180,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    
+
     backgroundColor: 'white'
   },
   logo: {
@@ -107,5 +109,10 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'MontserratBold',
     fontSize: 30
+  },
+  nameUser: {
+    fontFamily: 'MontserratMedium',
+    fontSize: 20,
+    textTransform: 'capitalize'
   }
 })

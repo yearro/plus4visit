@@ -52,7 +52,7 @@ const LoginForm = ({ isNewUser = false }: iProps) => {
           <ThemedTextInput
             icon='mail-outline'
             typeInput='Secondary'
-            placeholder='Example: myEmail@email.com'
+            placeholder='Example: myemail@email.com'
             value={values.email}
             onChangeText={handleChange('email')}
           />

@@ -1,5 +1,5 @@
-import { FlatList, StyleSheet, RefreshControl, Text, View, NativeSyntheticEvent, NativeScrollEvent, ActivityIndicator } from 'react-native'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { FlatList, RefreshControl, ActivityIndicator, StyleSheet, Pressable } from 'react-native'
 import { Client, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,12 +8,13 @@ import GeneralContentView from '@/components/GeneralContentView'
 import SearchInput from '@/components/SearchInput'
 import debounce from '@/helpers/utils'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Ionicons } from '@expo/vector-icons'
 
 const UsersScreen = () => {
   const insets = useSafeAreaInsets()
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [clients, setClients] = useState<Client[] | null>(null)
-  const [deleteView, setDeleteView] = useState(false)
+  const [deleteView, setDeleteView] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0)
@@ -73,12 +74,27 @@ const UsersScreen = () => {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
+        {
+          clients && clients.length !== 0 && (
+            <Pressable style={styles.createButton} onPress={() => { setDeleteView(prev => !prev) }}>
+              <Ionicons
+                name='create-outline'
+                size={40}
+                color={deleteView ? 'red' : 'white'}
+              />
+            </Pressable>
+          )}
+        {
+          isLoading && (
+            <ActivityIndicator style={styles.loader} size="large" color="#0000ff" />
+          )
+        }
         <FlatList
           data={clients}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item, index) => item.name + index}
           renderItem={({ item }) => (
             <ClientItem
-              key={item.name}
+              key={item.id}
               id={item.id}
               name={item.name}
               visits={item.visits}
@@ -121,6 +137,17 @@ const styles = StyleSheet.create({
   loader: {
     marginVertical: 20,
     alignItems: 'center',
+    justifyContent: 'center'
+  },
+  createButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    zIndex: 9999,
+    borderRadius: 50,
+    backgroundColor: '#FF6B6B',
+    padding: 10,
+    alignItems: 'flex-end',
     justifyContent: 'center'
   }
 })

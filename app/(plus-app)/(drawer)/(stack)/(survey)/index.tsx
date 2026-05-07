@@ -19,8 +19,7 @@ const SurveyScreen = () => {
   const [opinion, setOpinion] = useState('')
 
   const cleanData = () => {
-    // Only for testing
-    //setEmail('')
+    setName('')
     setOpinion('')
     setSurveyStep(0)
     setExperience(0)

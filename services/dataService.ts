@@ -74,11 +74,11 @@ export const getAllClients = async (query: string = '', offset: number = 0): Pro
   const db = await getAppDB()
   const limit = 7
   if (query === '') {
-    return await db.getAllAsync('SELECT * FROM clients LIMIT ? OFFSET ?', [limit, offset * limit])
+    return await db.getAllAsync('SELECT * FROM clients ORDER BY id DESC LIMIT ? OFFSET ?', [limit, offset * limit])
   }
   const cleanName = query.replace(/\s+/g, ' ').trim().toLowerCase()
   return await db.getAllAsync(
-    `SELECT * FROM clients WHERE name LIKE ?`,
+    `SELECT * FROM clients WHERE name LIKE ? ORDER BY id DESC`,
     [`%${cleanName}%`])
 }
 

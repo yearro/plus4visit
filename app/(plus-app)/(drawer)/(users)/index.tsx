@@ -35,6 +35,7 @@ const UsersScreen = () => {
   const handleSearch = useCallback(debounce(async (query: string) => {
     setIsLoading(true)
     const result = await getAllClients(query)
+    if (!result) return
     setClients(result)
     setIsLoading(false)
   }, 500), [])
@@ -67,18 +68,11 @@ const UsersScreen = () => {
   return (
     <GeneralContentView>
       <SafeAreaView style={{ flex: 1, marginBottom: insets.bottom }}>
-        {
-          clients?.length === 0 && (<View style={styles.container}>
-            <Text style={styles.headerText}>You do not have any registered clients.</Text>
-          </View>)
-        }
-        {clients && clients.length > 0 && (
-          <SearchInput
-            placeholder='Search client'
-            value={searchQuery}
-            onChangeText={(text) => setSearchQuery(text)}
-          />
-        )}
+        <SearchInput
+          placeholder='Search client'
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
         <FlatList
           data={clients}
           keyExtractor={(item) => item.name}

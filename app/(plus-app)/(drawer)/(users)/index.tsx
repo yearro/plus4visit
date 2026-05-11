@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, RefreshControl, ActivityIndicator, StyleSheet, Pressable } from 'react-native'
-import { Client, getAllClients } from '@/services/dataService'
+import { FlatList, RefreshControl, ActivityIndicator, StyleSheet, Pressable, Alert } from 'react-native'
+import { Client, deleteOpinion, deleteUser, getAllClients } from '@/services/dataService'
 import ClientItem from '@/components/ClientItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, useFocusEffect } from 'expo-router'
@@ -14,7 +14,7 @@ const UsersScreen = () => {
   const insets = useSafeAreaInsets()
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [clients, setClients] = useState<Client[] | null>(null)
-  const [deleteView, setDeleteView] = useState(true)
+  const [deleteView, setDeleteView] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0)
@@ -50,7 +50,18 @@ const UsersScreen = () => {
   }
 
   const deleteClient = (id: number) => {
-    console.log('delete ', id)
+    Alert.alert('Warning', 'All profile data and reviews will be permanently removed.', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'OK', onPress: async () => {
+          await Promise.all([deleteOpinion(id), deleteUser(id)])
+          await onPullToRefresh()
+        }
+      },
+    ]);
   }
 
   const checkVisits = (id: number) => {
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     borderRadius: 50,
     backgroundColor: '#FF6B6B',
-    padding: 10,
+    padding: 15,
     alignItems: 'flex-end',
     justifyContent: 'center'
   }

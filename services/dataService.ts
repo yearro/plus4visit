@@ -103,3 +103,13 @@ export const getLocalUser = async (email: string, pass: string): Promise<LocalUs
   const db = await getAppDB()
   return await db.getFirstAsync(`SELECT * FROM localusers WHERE email = ? AND password = ?`, [email, base64.encode(pass)])
 }
+
+export const deleteUser = async (id: number) => {
+  const db = await getAppDB()
+  return await db.runAsync('DELETE FROM clients WHERE id = ?', [id])
+}
+
+export const deleteOpinion = async (id: number) => {
+  const db = await getAppDB()
+  return await db.runAsync('DELETE FROM opinions WHERE user_id = ?', [id])
+}

@@ -1,50 +1,52 @@
-# Welcome to your Expo app 👋
+# 🚀 Plus4Visit: Smart Loyalty & Real-Time Feedback
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Elevate the way you connect with your customers. **Plus4Visit** isn't just a visit log; it’s a tool designed to turn occasional visitors into brand ambassadors through a seamless loop of direct feedback and personalized rewards.
 
-## Get started
+## ✨ Key Features
 
-1. Install dependencies
+* **📋 Agile Visit Logging:** Capture every customer visit in seconds.
+* **🗣️ "One-Tap" Satisfaction Survey:** Forget long, boring forms. We ask only what matters: Name, satisfaction (👍/👎), and a quick final thought.
+* **🎁 Dynamic Reward System:** * Fully configurable visit thresholds.
+    * Customizable prizes to match your business goals or inventory.
+* **📊 Insights & Statistics:** Monitor your business pulse with monthly charts that break down feedback trends at a glance.
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Tech Stack
 
-2. Start the app
+Built for performance and cross-platform reliability:
 
-   ```bash
-   npx expo start
-   ```
+* **Framework:** React Native with **Expo**.
+* **State Management:** **Zustand** for a lightweight, lightning-fast store.
+* **Database:** **SQLite** for reliable, local data persistence.
+* **UI/UX:** Designed with a focus on human interaction and accessibility.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## 🚀 Installation & Setup
+Clone the repository:
 
 ```bash
-npm run reset-project
+git clone https://github.com/yearro/plus4visit
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Install dependencies:
 
-## Learn more
+```bash
+yarn install
+```
+Configure Business Logic:
+Adjust the settings to define your own reward milestones (e.g., 5 visits = 1 free coffee).
 
-To learn more about developing your project with Expo, look at the following resources:
+Run the project:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+yarn start
+```
+# 📈 Data Visualization
+The statistics module allows managers to identify trends instantly. Did satisfaction dip this month? Check the comments and adjust your strategy in real-time.
 
-## Join the community
+🤝 Contributions
+Contributions to improve accessibility or add new metrics are always welcome. Feel free to open an Issue or submit a Pull Request.
 
-Join our community of developers creating universal apps.
+Developed with ❤️ to bridge the gap between businesses and people.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<img src="https://yeriarmenta.name/projects/plus4visitVideo.gif" width="300" />

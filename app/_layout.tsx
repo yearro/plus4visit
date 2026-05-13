@@ -8,7 +8,7 @@ import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  initialRouteName: '(routing)',
 };
 
 export default function RootLayout() {

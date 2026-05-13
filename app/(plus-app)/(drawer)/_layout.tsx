@@ -12,7 +12,7 @@ export default function Layout() {
   const textColor = useThemeColor({}, 'primary')
   const logOutApp = () => {
     logOut()
-    router.replace('../../login')
+    router.replace('/login')
   }
   return (
     <Drawer

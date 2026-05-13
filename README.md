@@ -48,5 +48,6 @@ The statistics module allows managers to identify trends instantly. Did satisfac
 Contributions to improve accessibility or add new metrics are always welcome. Feel free to open an Issue or submit a Pull Request.
 
 Developed with ❤️ to bridge the gap between businesses and people.
-
+<p>
 <img src="https://yeriarmenta.name/projects/plus4visitVideo.gif" width="300" />
+</p>

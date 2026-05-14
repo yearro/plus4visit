@@ -7,10 +7,6 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export const unstable_settings = {
-  initialRouteName: '(routing)',
-};
-
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
@@ -19,7 +15,7 @@ export default function RootLayout() {
     MontserratLight: require('@/assets/fonts/Montserrat-Light.ttf'),
   })
 
-  if( !loaded ) {
+  if (!loaded) {
     return null
   }
 
@@ -30,7 +26,9 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
           }}
-        ></Stack>
+        >
+          <Stack.Screen name="(routing)/index" />
+        </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
     </GestureHandlerRootView>

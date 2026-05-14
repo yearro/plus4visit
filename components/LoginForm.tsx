@@ -71,6 +71,7 @@ const LoginForm = ({ isNewUser = false }: iProps) => {
             icon='log-in-outline'
             typeButton='Secondary'
           >{buttonTitle}</ThemedButton>
+          {error && <ErrorMessage error={error} />}
         </>
       )}
     </Formik>

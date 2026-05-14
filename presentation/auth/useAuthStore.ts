@@ -6,31 +6,33 @@ import { addNewUser, getLocalUser } from '@/services/dataService'
 export const useAuthStore = create<AuthState>()((set, get) => ({
   status: 'unauthenticated',
   user: undefined,
-  login: async(email:string, pass:string, name:string, isNewUser:boolean) => { 
+  error: '',
+  login: async (email: string, pass: string, name: string, isNewUser: boolean) => {
     try {
-      if(isNewUser){
+      if (isNewUser) {
         await addNewUser(email, name, pass)
       } else {
         const user = await getLocalUser(email, pass)
         name = user?.name || ''
       }
       set({ status: 'authenticated' })
-      set({ user:  { email, pass, name } })
-      await SecureStoreSetItem('user', JSON.stringify({ user: { email, pass, name }}))
+      set({ user: { email, pass, name } })
+      await SecureStoreSetItem('user', JSON.stringify({ user: { email, pass, name } }))
       return true
     } catch (error) {
+      set({ error: String(error) })
       return false
     }
   },
-  checkStatus: async() => {
+  checkStatus: async () => {
     const likeUser = await SecureStoreGetItem('user')
-    if(likeUser) {
+    if (likeUser) {
       set({ status: 'authenticated' })
       set({ user: JSON.parse(likeUser) })
     }
     return true
   },
-  logOut: async() => {
+  logOut: async () => {
     await SecureStoreDeleteItem('user')
     return true
   }

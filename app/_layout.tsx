@@ -26,7 +26,6 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName='(routing)/index'
         />
         <StatusBar style="auto" />
       </ThemeProvider>

@@ -30,7 +30,7 @@ const HomeScreen = () => {
     return <ActivityIndicator size="large" />
 
   if( status === 'unauthenticated')
-    return <Redirect href='/login'/>
+    return <Redirect href='/login/login'/>
 
   if ( status === 'authenticated')
     return <Redirect href='/(plus-app)/(drawer)/(users)' />

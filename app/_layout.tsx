@@ -26,9 +26,8 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
           }}
-        >
-          <Stack.Screen name="(routing)/index" />
-        </Stack>
+          initialRouteName='(routing)/index'
+        />
         <StatusBar style="auto" />
       </ThemeProvider>
     </GestureHandlerRootView>

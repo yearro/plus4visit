@@ -2,7 +2,7 @@ import { getAppDB } from './db'
 
 export async function createAppTables() {
   const db = await getAppDB()
-  await db.execAsync(`
+  return await db.execAsync(`
     CREATE TABLE IF NOT EXISTS clients (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -25,5 +25,4 @@ export async function createAppTables() {
     );
     CREATE UNIQUE INDEX IF NOT EXISTS localuser_email ON localusers(email);
   `)
-  return true
 }

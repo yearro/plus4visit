@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { useAuthStore } from '@/presentation/auth/useAuthStore'
 import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
 import { Redirect } from 'expo-router'
-import { createAppTables } from '@/services/schema'
 
 const HomeScreen = () => {
   const { status, checkStatus, error } = useAuthStore()
@@ -12,11 +11,6 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     async function checkBasics() {
-      try {
-        await createAppTables()
-      } catch (error) {
-        Alert.alert('DB init error:', error?.toString() || 'Error inicializando base de datos')
-      }
       try {
         await Promise.all([
           checkStatus(),

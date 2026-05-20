@@ -6,6 +6,9 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, Alert, View } from 'react-native';
+import { createAppTables } from '@/services/schema';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -14,9 +17,27 @@ export default function RootLayout() {
     MontserratBold: require('@/assets/fonts/Montserrat-Bold.ttf'),
     MontserratLight: require('@/assets/fonts/Montserrat-Light.ttf'),
   })
+  const [dbReady, setDbReady] = useState(false)
 
-  if (!loaded) {
-    return null
+  useEffect(() => {
+    async function initDB() {
+      try {
+        await createAppTables()
+      } catch (error) {
+        Alert.alert('DB init error:', error?.toString() || 'Error inicializando base de datos')
+      } finally {
+        setDbReady(true)
+      }
+    }
+    initDB()
+  }, [])
+
+  if (!loaded || !dbReady) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
   }
 
   return (

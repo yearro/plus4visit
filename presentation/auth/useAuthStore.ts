@@ -34,6 +34,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   },
   logOut: async () => {
     await SecureStoreDeleteItem('user')
+    set({ status: 'unauthenticated', user: undefined })
     return true
   }
 }))

@@ -13,7 +13,7 @@ interface iProps {
 }
 
 const LoginForm = ({ isNewUser = false }: iProps) => {
-  const { login, error } = useAuthStore()
+  const { login } = useAuthStore()
   const buttonTitle = isNewUser ? 'Create User' : 'Signed in'
   const onSubmitParams = async ({ email = '', pass = '', name = '' }) => {
     const state = await login(email, pass, name, isNewUser)
@@ -71,7 +71,6 @@ const LoginForm = ({ isNewUser = false }: iProps) => {
             icon='log-in-outline'
             typeButton='Secondary'
           >{buttonTitle}</ThemedButton>
-          {error && <ErrorMessage error={error} />}
         </>
       )}
     </Formik>

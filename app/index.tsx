@@ -6,7 +6,7 @@ import { useSettingsStore } from '@/presentation/settings/useGameSettingsStore'
 import { Redirect } from 'expo-router'
 
 const HomeScreen = () => {
-  const { status, checkStatus, error } = useAuthStore()
+  const { status, checkStatus } = useAuthStore()
   const { getSettings } = useSettingsStore()
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {

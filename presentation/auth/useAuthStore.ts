@@ -13,6 +13,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         await addNewUser(email, name, pass)
       } else {
         const user = await getLocalUser(email, pass)
+        if (!user) return false
         name = user?.name || ''
       }
       set({ status: 'authenticated' })

@@ -61,6 +61,7 @@ const LoginForm = ({ isNewUser = false }: iProps) => {
             icon='lock-closed-outline'
             typeInput='Secondary'
             placeholder='Write your password'
+            secureTextEntry={true}
             value={values.pass}
             onChangeText={handleChange('pass')}
           />
